@@ -82,6 +82,37 @@ top-of-funnel format for pre-intent capture (`04-growth-engine.md`) — low comm
 more frequent low-stakes touches accelerate IRT calibration data collection; and it's
 the literal content unit for daily micro-content distribution (`04-growth-engine.md`).
 
+## Gamification layer: infrastructure other decisions already depend on
+Not a bolt-on skin — several already-decided pieces need this to function: live
+test-night events (`04-growth-engine.md`) need a real-time leaderboard to exist at all;
+daily micro-content (`04-growth-engine.md`) leans on Wordle-style streak/share mechanics
+as its core reason to work; retention-inside-the-hunt (`03-data-and-trust.md`) is
+fundamentally "give someone a reason to return tomorrow."
+
+**The mechanics (config-driven, like everything else here):**
+- **Streaks** — daily practice, the retention engine.
+- **XP/levels, weighted by genuine effort, not raw volume.** Architecturally
+  load-bearing: rewarding item count over accuracy incentivizes rushing/guessing to farm
+  streaks, which **pollutes the timing and accuracy signals** item-bank evolution and
+  deep reporting (both below / `03-data-and-trust.md`) depend on.
+- **Per-skill mastery badges** — a friendlier face on the deep-reporting per-skill
+  breakdown, once the skill taxonomy exists.
+- **Leaderboards** — the literal dependency live events need.
+- **Shareable result/streak cards** — the artifact pre-intent capture and daily
+  micro-content (`04-growth-engine.md`) both already assumed existed.
+- **Self-wager on your own outcome** — a gamification mechanic that's also a possible
+  unlock for the concordance label-collection problem (`03-data-and-trust.md`).
+
+**Two guardrails:**
+- **Badges stay visually and architecturally separate from the signed credential**
+  (`03-data-and-trust.md`) — never confused with, or placed next to, the serious
+  employer-trusted artifact.
+- **Leaderboards default to anonymous/pseudonymous, opt-in to public** — the primary
+  persona is explicitly anxious and price-sensitive (`01-strategy.md`); public ranking
+  against peers could read as a stressor, not a motivator.
+
+**Status:** committed direction; detailed design deferred → `open-questions.md` §P.
+
 ## Test Intelligence: sourcing skin content, and keeping it current
 A continuously-updated framework that discovers each target's test **structure/format**
 and keeps skins accurate as real-world tests change. This is the input side of the

@@ -82,6 +82,20 @@ high-risk classification, EEOC/Equality Act adverse-impact analysis — see
 exact IRT model choice, DIF methodology, label-collection mechanics) deferred to a
 dedicated pass → `open-questions.md` §E.
 
+## Credential signing — elevated to top priority (promoted from brainstorm, 2026-07-20)
+**The literal tamper-proofing the D13 "portable, trusted credential" thesis eventually
+needs**, and Ankur's explicit call: this goes to the top of the list, not the parking
+lot. Sign every credential (W3C Verifiable Credentials, or a simpler signed-JWT
+approach — scheme TBD, `open-questions.md` §O Q63) so an employer can cryptographically
+confirm a score wasn't faked.
+
+**The concrete implication that makes this urgent, not just important:** the first
+shareable certificate ever issued (the near-term LinkedIn-profile artifact from
+`04-growth-engine.md` D19) should be **signed from day one**, not a plain image
+retrofitted with signing later. Same "instrument now or lose it" pattern as DIF-tagging
+and skill-taxonomy tagging below — verification can't be bolted onto certificates
+already circulating. Resolve the signing scheme *before* that first certificate ships.
+
 ## The reporting layer: turning the spine into insight
 A new architectural layer, downstream of everything above — IRT ability estimate +
 item-level signals (timing, distractor choice, see `02-product-architecture.md`'s item

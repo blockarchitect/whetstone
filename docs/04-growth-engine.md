@@ -51,7 +51,11 @@ substrate, not the enemy.
    `HowTo`) generated from the same config; direct-answer H2s, tables, concrete facts.
 2. **Be a citable primary source** — the **concordance score** (`03-data-and-trust.md`)
    is a proprietary statistic AI engines cite because no one else has it. Moat and AEO
-   are the same asset — publish it.
+   are the same asset — publish it. **Concrete instances (promoted from brainstorm,
+   2026-07-20):** a public **Reasoning Readiness Index** by university/region, and
+   **placement/outcome reports** — both aggregate, anonymized, published like a salary
+   report. Free PR, feeds AEO, builds authority ahead of the D13 endgame. Needs a
+   methodology pass (which stat, anonymization at low N) → `open-questions.md` §O Q61.
 3. **Be present where LLMs trust** — Reddit is heavily weighted; the existing VoC
    research doubles as AEO distribution. Add `llms.txt`; keep the crawl fast and clean.
 4. **Be the callable tool** — the deepest bet: expose the engine as an **MCP server**
@@ -101,6 +105,26 @@ eventually fires** — a genuine retention/LTV lever, not vanity traffic.
   engine-share only, never a quiet drift into being an IQ-test site.
 
 **Status:** committed direction; open questions → `open-questions.md` §J.
+
+**Concrete tactic, few-months-out (promoted from brainstorm, 2026-07-20): sponsor a
+streamer speedrunning a mock test live.** Competitive/puzzle streamer audiences overlap
+closely with this psychographic — cheaper and more credible than ads. Deliberately
+later-horizon: needs the product to be demo-worthy first. → `open-questions.md` §O Q60.
+
+## Community & live events — a new channel, not pSEO/AEO/pre-intent/daily-content
+**Promoted from brainstorm, 2026-07-20; now/soon horizon.** Two ideas that are really
+one motion:
+- **Campus "test captain" ambassadors** — students recruited/rewarded per campus to
+  organize local events.
+- **Synchronous "test night" live events** — many candidates sit the same timed mock at
+  once, live leaderboard + chat. Turns solitary anxious prep into a communal,
+  almost-esports moment. Bonus: one synchronized data burst for calibration
+  (`03-data-and-trust.md`).
+
+Distinct from every other channel here — it's community/event-based, not
+content/search-based — and it's a genuine differentiator versus incumbents who have
+none of this. Program mechanics (recruitment, rewards, event cadence, platform support
+for real-time leaderboards) not yet designed → `open-questions.md` §O Q58.
 
 ## Daily micro-content distribution — a concrete pre-intent-capture tactic
 One calibrated item a day, scheduled, posted as a poll/question people answer in-feed,

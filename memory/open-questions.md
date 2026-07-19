@@ -210,7 +210,71 @@
     re-check MDP terms and the Talent Solutions partner program directly before any real
     investment (BD conversation, API application), not just from this research pass.
 
+## O. Roadmap triage (D20) — [committed direction with horizons; none designed yet]
+58. **Campus test-captain + live test-night design.** [open, near-term] Program
+    mechanics: how captains are recruited/rewarded, event cadence, platform support
+    needed for synchronous live sessions (real-time leaderboard, chat). First one is
+    the actual design spec.
+59. **Bootcamp/ed-tech partnership shape.** [open, near-term] Distribution-only vs.
+    paid white-label — decide *before* the first conversation, not during it, given the
+    D5 monetization-parking tension flagged in D20. Which bootcamps/ed-techs first?
+60. **Streamer sponsorship — selection + brief.** [open, few-months-out] Which
+    streamers actually reach the D15 psychographic; what does the sponsored segment
+    look like; budget ballpark.
+61. **Readiness Index + placement reports — methodology.** [open] What's the underlying
+    stat (pass-rate by university? by construct? by employer?), how is anonymization
+    guaranteed at low N (small-cohort re-identification risk), and what's the
+    publishing cadence.
+62. **Academic partner outreach.** [open, down-the-road] Which university I-O
+    psychology departments to approach, and what do we need built (D12 data spine
+    maturity) before that conversation is credible.
+63. **Credential signing — scheme + scope.** [open, elevated priority] W3C Verifiable
+    Credentials vs. a simpler signed-JWT approach; what exactly gets signed (a
+    completed report? a benchmark pass? both?); key management. Should be resolved
+    *before* the first shareable certificate (D19) ships, not after.
+
+## P. Gamification layer (D21) — [committed direction; detailed design deferred]
+64. **XP/effort-weighting formula.** [open] Exact formula so streak/XP rewards track
+    genuine effort (accuracy, consistency) without incentivizing rushing or guessing —
+    needs to be validated against real response data, not just designed on paper.
+    Directly protects D14/D17's signal quality.
+65. **Leaderboard scope + privacy default.** [open] Global vs. per-skin (e.g. only vs.
+    other people prepping for the same employer) vs. friends-only; confirm
+    anonymous/pseudonymous-by-default holds up in user testing with the anxious persona.
+66. **Self-wager mechanic design.** [open] How the graduated-in prediction-market idea
+    actually works — wager sizing, resolution UX (how/when does someone report the real
+    outcome), and how it feeds `open-questions.md` §E's label-collection problem.
+67. **Badge/credential visual separation — concrete rule.** [open] A literal style-guide
+    rule (distinct component library, distinct page, distinct language) so gamification
+    badges can never be mistaken for the D20 signed credential, not just a stated intent.
+68. **Does gamification undercut the "trusted assessment" brand?** [open] Tie-in to the
+    existing brand-architecture question (§J Q40, §H Q33) — does a streaks-and-badges
+    layer sit awkwardly next to "the assessment employers trust," and if so, does it need
+    its own visual register (playful) distinct from the credential/report register
+    (serious)?
+
 ---
 
 ## Parking lot / raw ideas (unsorted — promote to a section when they mature)
-- (empty — drop half-formed thoughts here as they come up)
+Unvetted spitball ideas from a 2026-07-20 brainstorm. None designed, none committed —
+promote to a numbered decision if one gets pursued for real.
+
+- **Prediction-market self-wagers** — before sitting the real test, a candidate wagers
+  points (not money) on whether they'll pass. Loss-aversion/commitment psychology as a
+  possible unlock for the concordance label-collection problem (D12 §E) — the hardest
+  open problem in the venture. Worth a real design pass, not just a spitball, if D12
+  work starts before another solution is found.
+- **AI mock-recruiter debrief** — a personality-driven AI reaction to a completed
+  practice test ("harsh mode" / "encouraging mode" toggle), layered onto the D17 report.
+- **Deliberately imperfect practice mode** — simulate real assessment-platform jank
+  (input lag, connection hiccups) so practice matches real conditions, not a pristine app.
+- **"Beat the bot"** — publicly race an LLM against candidates on the same test. Cheap
+  PR stunt, real engagement hook.
+- **QR-code posters in university career-services offices** — "scan before your SHL
+  test next week." Near-zero cost, very high-intent placement.
+- **License the engine to government/civil-service exam boards** — same generative
+  engine, a much bigger and completely different customer than corporate hiring teams.
+
+**Explicitly rejected, not just parked:** anything resembling a "leaked test" honeypot
+or parody site — even as a joke, too close to the "dumps" line the hard constraints
+exist to prevent. Not worth the risk for the engagement.

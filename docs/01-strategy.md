@@ -32,6 +32,10 @@ directly — not a moat feature bolted on later. This makes the data spine
    classifies hiring/assessment AI as high-risk** — conformity assessment, documentation,
    bias monitoring. Expensive and slow, but also the moat: whoever clears it first is
    hard to follow. Needs counsel + a psychometrician, not just engineering.
+   **Down-the-road concrete step (promoted from brainstorm, 2026-07-20):**
+   co-publishing validity studies with a university I-O psychology department — they
+   want publications, we want this evidence. Correctly sequenced *after* consumer-wedge
+   traction and D12 data-spine maturity, not accelerated. → `open-questions.md` §O Q62.
 2. **Test security vs. the consumer product.** The free product teaches format and lets
    items be farmed — poison for a secure qualifying test. Resolved by a **two-pool
    architecture** (generative/consumer vs. secured/qualifying, same engine, different
@@ -85,6 +89,13 @@ needed, not a design concern.
 moat, which needs durable identity to link practice → real outcome. Ship **lightweight
 identity from day one** — anonymous device/session IDs, optional email capture at the
 "get your readiness estimate" moment — *not* a login wall.
+
+**Bootcamp/ed-tech partnerships (promoted from brainstorm, 2026-07-20; now/soon
+horizon).** Pursue these as **distribution-first** — audience access via the
+partnership, still free — consistent with the parking above. **Flag:** if any of these
+become *paid* white-label deals, that's revenue arriving ahead of the "~6 months"
+schedule. Decide which kind of deal it is *before* the first conversation, not during
+it → `open-questions.md` §O Q59.
 
 **Net effect:** with monetization + auth de-scoped, the genuinely open engineering
 problems are the **data spine / concordance** (`03-data-and-trust.md`) and the **Test

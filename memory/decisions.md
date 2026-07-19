@@ -727,6 +727,77 @@ could otherwise be misread as license to automate.
 
 ---
 
+## D20 — Roadmap triage: seven parking-lot ideas promoted, with horizons
+**Decided (direction).** Triage of the 2026-07-20 brainstorm parking lot — which raw
+ideas get real investment and roughly when, moving them from "unvetted spitball" to
+"committed direction with a horizon." Doesn't design any of them in detail yet.
+
+- **Now/soon — campus "test captain" ambassadors + live "test night" events.** The
+  same motion: captains organize local synchronous test events. New growth channel —
+  community/events — distinct from pSEO/AEO/pre-intent-capture/daily-content (D9/D15/D18).
+- **Now/soon — bootcamp/ed-tech partnerships.** Distribution-first (audience access,
+  still free), consistent with D5's parked monetization. **Flag:** if any of these
+  become *paid* white-label deals, that's revenue arriving ahead of the "~6 months
+  parked" monetization schedule — worth flagging explicitly when it happens, not a
+  blocker to pursuing the conversations now.
+- **A few months out — sponsor a streamer speedrunning a mock test.** A concrete D15
+  pre-intent-capture tactic, explicitly later-horizon (needs the product to be
+  demo-worthy first).
+- **Ongoing, traffic-driving — the Reasoning Readiness Index + placement reports.**
+  Folds into the existing AEO "be a citable primary source" move (D9) — public,
+  aggregate, anonymized content that builds authority ahead of the D13 endgame.
+- **Down the road — academic validity studies.** Matches D13's own sequencing (gate #1,
+  meant to follow consumer-wedge traction) — not accelerated, just confirmed.
+- **Elevated to top priority — verifiable-credential signing.** Ties directly to D13's
+  "portable, trusted credential" thesis and D19's near-term shareable-certificate idea.
+  **Concrete implication:** the first certificate ever issued should be **signed from
+  day one** (W3C Verifiable Credentials or an equivalent signed-token approach) — same
+  "instrument now or lose it" pattern as DIF-tagging (D14) and skill-taxonomy tagging
+  (D17). Verification can't be retrofitted onto certificates already in the wild.
+
+**Status:** committed direction, horizons set; none of these are designed yet — see
+`open-questions.md` §O.
+
+---
+
+## D21 — Gamification layer: infrastructure several decisions already depend on
+**Decided (direction).** Not a bolt-on skin — several already-decided pieces quietly
+need this to function: live test-night events (D20) need a real-time leaderboard to
+exist at all; daily micro-content (D18) leans on Wordle-style streak/share mechanics as
+its core reason to work; retention-inside-the-hunt (D12) is fundamentally "give someone
+a reason to return tomorrow." A gamification layer is what delivers all three, not a
+decoration added after them.
+
+**The mechanics (a menu, config-driven like everything else in this architecture):**
+- **Streaks** — daily practice, the retention engine for D12/D18.
+- **XP/levels, weighted by genuine effort, not raw volume.** Architecturally load-
+  bearing, not cosmetic: rewarding item count over accuracy incentivizes rushing/
+  guessing to farm streaks, which **pollutes the timing and accuracy signals** D14's
+  item-bank evolution and D17's reporting depend on. Reward accuracy-adjusted
+  engagement.
+- **Per-skill mastery badges** — a friendlier face on D17's per-skill breakdown, once
+  the skill taxonomy exists.
+- **Leaderboards** — the literal dependency D20's live events need.
+- **Shareable result/streak cards** — the artifact D15 (virality) and D18 (daily
+  content) both already assumed existed.
+- **Self-wager on your own outcome** (parking lot idea, `open-questions.md`) —
+  graduates into this layer rather than staying standalone; a gamification mechanic
+  that's also a possible unlock for D12's hardest problem (concordance labels).
+
+**Two guardrails, stated now rather than discovered later:**
+- **Keep badges visually and architecturally separate from the signed credential
+  (D20).** A streak badge must never be confused with, or sit next to, the serious
+  employer-trusted artifact. Same brand-discipline instinct as D15's IQ-test-content
+  guardrail and D13's trust question.
+- **Leaderboards default to anonymous/pseudonymous, opt-in to public.** The primary
+  persona (Priya, `01-strategy.md`) is explicitly anxious and price-sensitive — a public
+  ranking against peers possibly applying to the same job could read as a stressor, not
+  a motivator.
+
+**Status:** committed direction; detailed design deferred → `open-questions.md` §P.
+
+---
+
 ## Reference — where things live now
 This file is the **historical reasoning log** (why we decided X, what we rejected) — it
 stays append-only and chronological. Two other places hold the material that used to
