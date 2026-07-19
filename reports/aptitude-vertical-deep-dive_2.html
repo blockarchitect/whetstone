@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Aptitude Vertical — Deep Dive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7; --paper-2:#F2F0E9; --card:#FFFFFF;
+    --ink:#15181D; --ink-2:#53565D; --ink-3:#8A8D94;
+    --line:#E3DFD6; --line-2:#EEECE5;
+    --accent:#0C6E82; --accent-2:#0A8299; --accent-soft:#DFEFF2; --accent-ink:#083B46;
+    --strong:#0F7A5F; --strong-bg:#E1F0EB;
+    --mid:#B0781B; --mid-bg:#F6ECD7;
+    --weak:#BC4130; --weak-bg:#F7E4DF;
+    --radius:14px; --radius-sm:9px; --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.62;font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft)}
+  a:hover{border-color:var(--accent)}
+  p{margin:0 0 18px}
+  strong{font-weight:600;color:var(--ink)}
+  em{font-style:italic}
+  .muted{color:var(--ink-2)}
+
+  /* HERO */
+  .hero{padding:74px 0 42px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--accent-soft) 0%, rgba(223,239,242,0) 62%)}
+  .hero .up{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+  .hero .badge{font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:600;letter-spacing:.05em;background:var(--accent);color:#fff;padding:5px 11px;border-radius:100px}
+  .hero .up .companion{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .hero h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.0;font-size:clamp(2.4rem,6vw,4.2rem);margin:0 0 20px;color:var(--accent-ink)}
+  .hero .lede{font-size:clamp(1.1rem,2.1vw,1.38rem);line-height:1.5;color:var(--ink-2);max-width:46ch;margin:0 0 30px}
+  .hero .lede b{color:var(--ink)}
+  .statbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:6px}
+  .statbar .s{background:var(--card);padding:16px 18px}
+  .statbar .s .v{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;line-height:1;color:var(--accent-ink);letter-spacing:-.01em}
+  .statbar .s .k{font-family:"JetBrains Mono",monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-top:6px;line-height:1.35}
+  .statbar .s.warn .v{color:var(--weak)}
+
+  /* SECTIONS */
+  section{padding:58px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:15px;margin-bottom:26px}
+  .sec-head .num{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--accent);padding-top:4px;flex-shrink:0;font-weight:600}
+  .sec-head h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;letter-spacing:-.015em;font-size:clamp(1.6rem,3.3vw,2.2rem);line-height:1.06;margin:0}
+  section > .wrap > p{max-width:68ch}
+
+  .callout{border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:19px 23px;margin:24px 0;font-size:.96em}
+  .callout .eyebrow{display:block;margin-bottom:7px}
+  .callout.warn{border-color:var(--weak);background:var(--weak-bg)}
+  .callout.warn .eyebrow{color:var(--weak)}
+  .callout.note{border-color:var(--mid);background:var(--mid-bg)}
+  .callout.note .eyebrow{color:var(--mid)}
+
+  /* FUNNEL */
+  .funnelviz{display:grid;grid-template-columns:1fr;gap:8px;margin:6px 0 6px;max-width:640px}
+  .fbar{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden}
+  .fbar .fill{position:absolute;inset:0;background:var(--accent-soft);z-index:0}
+  .fbar .lab,.fbar .num{position:relative;z-index:1}
+  .fbar .lab{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:1rem}
+  .fbar .lab small{display:block;font-family:"JetBrains Mono",monospace;font-weight:400;font-size:11px;color:var(--ink-2);margin-top:2px}
+  .fbar .num{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.4rem;color:var(--accent-ink)}
+  .fbar.b1{width:100%} .fbar.b2{width:78%} .fbar.b3{width:48%}
+  .fbar.b3 .fill{background:var(--strong-bg)}
+  .funnel-note{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+
+  /* two-col */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:4px}
+  .infocard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px}
+  .infocard h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 10px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+  .infocard p{font-size:.94em;color:var(--ink-2);margin:0 0 10px}
+  .infocard p:last-child{margin-bottom:0}
+  .dotk{width:8px;height:8px;border-radius:100px;background:var(--accent);flex-shrink:0}
+
+  /* SEARCH PYRAMID */
+  .pyramid{display:grid;gap:7px;margin:8px 0 4px}
+  .prow{border-radius:10px;padding:15px 20px;border:1px solid var(--line);position:relative}
+  .prow .ptag{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;font-weight:600}
+  .prow .pq{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-2);line-height:1.7}
+  .prow .pq span{background:var(--paper-2);border:1px solid var(--line-2);border-radius:5px;padding:2px 7px;display:inline-block;margin:2px 3px 2px 0}
+  .prow.head{width:56%;margin:0 auto;background:var(--weak-bg);border-color:#EAD3CC}
+  .prow.head .ptag{color:var(--weak)}
+  .prow.mid{width:78%;margin:0 auto;background:var(--mid-bg);border-color:#EEE0C4}
+  .prow.mid .ptag{color:var(--mid)}
+  .prow.tail{width:100%;background:var(--strong-bg);border-color:#CFE6DD}
+  .prow.tail .ptag{color:var(--strong)}
+  .prow .verdict-inline{font-family:"Newsreader",serif;font-size:13px;color:var(--ink-2);margin-top:8px;font-style:italic}
+
+  /* PERSONA */
+  .persona{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:6px 0 18px;box-shadow:0 1px 0 var(--line)}
+  .persona .p-hd{background:var(--accent-ink);color:#fff;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .persona .p-hd .who{display:flex;align-items:center;gap:16px}
+  .persona .p-hd .avatar{width:52px;height:52px;border-radius:100px;background:var(--accent-2);display:flex;align-items:center;justify-content:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.3rem;color:#fff;flex-shrink:0}
+  .persona .p-hd .nm{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.4rem;line-height:1.1;letter-spacing:-.01em}
+  .persona .p-hd .rl{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#AEDDE6;margin-top:3px}
+  .persona .p-hd .tag-primary{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.05em;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);padding:5px 11px;border-radius:100px}
+  .persona .p-quote{padding:20px 26px 6px;font-family:"Newsreader",serif;font-style:italic;font-size:1.12rem;line-height:1.45;color:var(--accent-ink)}
+  .persona .p-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:14px 26px 24px}
+  .persona .pg{padding:14px 0;border-top:1px solid var(--line-2)}
+  .persona .pg:nth-child(odd){padding-right:22px}
+  .persona .pg:nth-child(even){padding-left:22px;border-left:1px solid var(--line-2)}
+  .persona .pg .lbl{font-family:"JetBrains Mono",monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:600;margin-bottom:7px}
+  .persona .pg ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+  .persona .pg li{font-size:.92em;color:var(--ink-2);line-height:1.4;padding-left:16px;position:relative}
+  .persona .pg li::before{content:"—";position:absolute;left:0;color:var(--ink-3)}
+  .persona .pg p{font-size:.92em;color:var(--ink-2);margin:0}
+  .secondary{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .scard{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 20px}
+  .scard .sh{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1rem;margin:0 0 3px;letter-spacing:-.01em}
+  .scard .sm{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:9px}
+  .scard p{font-size:.9em;color:var(--ink-2);margin:0;line-height:1.45}
+
+  /* COMPETITOR TABLE */
+  .tbl-wrap{overflow-x:auto;margin:4px -4px 0;padding:4px}
+  table.cmp{width:100%;border-collapse:separate;border-spacing:0;min-width:760px;font-family:"JetBrains Mono",monospace}
+  table.cmp th,table.cmp td{text-align:left;padding:13px 12px;border-bottom:1px solid var(--line-2);vertical-align:top;font-size:12px}
+  table.cmp thead th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--line);white-space:nowrap}
+  table.cmp tbody tr:hover{background:var(--paper-2)}
+  table.cmp .nm{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:13.5px;color:var(--ink);letter-spacing:-.01em}
+  table.cmp .sub{color:var(--ink-3);font-size:11px;margin-top:2px}
+  table.cmp .gap{color:var(--weak)}
+  table.cmp .win{color:var(--strong)}
+
+  /* ESCAPE ROUTES */
+  .routes{display:grid;gap:14px;margin:8px 0 4px}
+  .route{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;display:grid;grid-template-columns:40px 1fr;gap:18px}
+  .route .rn{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.5rem;color:var(--accent);line-height:1}
+  .route h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.15rem;margin:0 0 6px;letter-spacing:-.01em}
+  .route p{font-size:.95em;color:var(--ink-2);margin:0 0 8px}
+  .route .rmeta{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-3);display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .route .rmeta b{color:var(--strong);font-weight:500}
+  .route .rmeta b.hard{color:var(--mid)}
+
+  /* WEDGE SEQUENCE */
+  .seq{display:grid;gap:0;margin:6px 0 4px}
+  .seqstep{display:grid;grid-template-columns:46px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line-2)}
+  .seqstep:last-child{border-bottom:none}
+  .seqstep .sn{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-weight:600;font-size:12px;color:#fff}
+  .seqstep .sn.free{background:var(--strong)} .seqstep .sn.grow{background:var(--accent)} .seqstep .sn.pay{background:var(--ink)} .seqstep .sn.moat{background:var(--accent-ink)}
+  .seqstep h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.05rem;margin:3px 0 3px;letter-spacing:-.01em}
+  .seqstep h4 .ph{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-left:8px}
+  .seqstep p{font-size:.93em;color:var(--ink-2);margin:0}
+
+  /* RISK GRID */
+  .risks{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:4px}
+  .risk{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 19px}
+  .risk .rt{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:5px;display:inline-block;margin-bottom:8px}
+  .risk.high .rt{background:var(--weak-bg);color:var(--weak)}
+  .risk.med .rt{background:var(--mid-bg);color:var(--mid)}
+  .risk h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:.98rem;margin:0 0 5px;letter-spacing:-.01em}
+  .risk p{font-size:.88em;color:var(--ink-2);margin:0;line-height:1.42}
+
+  .checklist{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:9px}
+  .checklist li{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:13px 16px 13px 42px;position:relative;font-size:.94em;color:var(--ink-2)}
+  .checklist li::before{content:"›";position:absolute;left:16px;top:11px;font-family:"JetBrains Mono",monospace;color:var(--accent);font-weight:600;font-size:1.1em}
+  .checklist li b{color:var(--ink);font-weight:600}
+
+  footer{padding:42px 0 68px}
+  footer .rule{height:1px;background:var(--line);margin:0 0 28px}
+  footer .note{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink-3);line-height:1.7;max-width:82ch}
+  footer .note b{color:var(--ink-2);font-weight:500}
+
+  @media (max-width:720px){
+    body{font-size:16.5px}
+    .wrap{padding:0 20px}
+    .hero{padding:52px 0 34px}
+    section{padding:44px 0}
+    .two,.secondary,.risks,.persona .p-grid{grid-template-columns:1fr}
+    .persona .pg:nth-child(even){padding-left:0;border-left:none}
+    .persona .pg:nth-child(odd){padding-right:0}
+    .prow.head,.prow.mid{width:100% !important}
+    .route{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .fade{opacity:0;transform:translateY(9px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+    @keyframes rise{to{opacity:1;transform:none}}
+  }
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap fade">
+    <div class="up">
+      <span class="badge">C2 · VERTICAL DEEP-DIVE</span>
+      <span class="companion">Companion to the Category Brief</span>
+    </div>
+    <h1>The aptitude<br>vertical.</h1>
+    <p class="lede">Pre-employment aptitude &amp; psychometric prep — the surface with the most search demand and the least quality supply. <b>A strong wedge with one honest ceiling to design around.</b></p>
+    <div class="statbar">
+      <div class="s"><div class="v">80%+</div><div class="k">of Fortune 500 use these tests</div></div>
+      <div class="s"><div class="v">220M+</div><div class="k">assessments run per year</div></div>
+      <div class="s"><div class="v">1M+</div><div class="k">candidates at the top incumbent</div></div>
+      <div class="s"><div class="v">£39–69</div><div class="k">typical prep price</div></div>
+      <div class="s warn"><div class="v">5–10 hrs</div><div class="k">prep, then they churn ← the catch</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 DEMAND -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The demand is structural, not a fad</h2></div>
+    <p class="muted">Psychometric screening is now a near-universal gate in graduate and professional hiring — used by over 80% of Fortune 500 and roughly 75% of the UK's Times Top 100, and by financial services, consulting, tech, law, civil service, and the military. Because it's the <em>first</em> filter after application, essentially every applicant to a competitive scheme has to sit one, whether or not they get hired. That's what makes the top-of-funnel audience so large.</p>
+    <div class="funnelviz">
+      <div class="fbar b1"><div class="fill"></div><div class="lab">Applicants to one large scheme<small>everyone must sit the test</small></div><div class="num">20,000</div></div>
+      <div class="fbar b2"><div class="fill"></div><div class="lab">Pass the aptitude filter<small>narrowed in hours</small></div><div class="num">~2,000</div></div>
+      <div class="fbar b3"><div class="fill"></div><div class="lab">Actually hired<small>test decides who advances</small></div><div class="num">~200</div></div>
+    </div>
+    <p class="funnel-note">Illustrative funnel for a single large graduate scheme. The prep audience is the top bar — not the bottom.</p>
+    <div class="two" style="margin-top:22px">
+      <div class="infocard">
+        <h4><span class="dotk"></span>The trigger &amp; the stakes</h4>
+        <p>The buying moment is sharp: an email lands — <em>"complete your SHL numerical &amp; verbal assessment within 5 days"</em> — for a format the candidate has often never seen. It's usually <strong>one attempt</strong>, with any retake gated behind a 6–12 month cooling-off. A weak score quietly ends the application.</p>
+        <p>Competitive schemes (Big Four, investment banking, top consulting) require roughly the <strong>70th–80th percentile</strong> against a graduate norm group.</p>
+      </div>
+      <div class="infocard">
+        <h4><span class="dotk"></span>Why it drives prep (and anxiety)</h4>
+        <p>Scores are <strong>norm-referenced</strong>, so candidates can't tell what "good enough" is or where the cut sits — which fuels practice demand and dread in equal measure.</p>
+        <p>Most see meaningful improvement after <strong>5–10 hours over 1–2 weeks</strong>. That short, intense, one-off window is the whole demand curve — and, as §05 shows, the whole problem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 SEARCH MAP -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The search-demand map — and where it's winnable</h2></div>
+    <p class="muted">The demand expresses itself as search, and it stratifies cleanly. The head terms are enormous but owned by incumbents with years of backlinks. The <em>winnable</em> demand is the long tail: candidates searching for the exact test or employer they're facing, where intent is highest and competition is thinnest — and where AI-cheap content lets you cover thousands of variants that no hand-authoring team can.</p>
+    <div class="pyramid">
+      <div class="prow head">
+        <div class="ptag">Head · high volume · incumbent-locked</div>
+        <div class="pq"><span>aptitude test</span><span>numerical reasoning test</span><span>psychometric test</span><span>practice aptitude tests</span></div>
+        <div class="verdict-inline">Hardest to rank — dominated by JobTestPrep, AssessmentDay, Practice Aptitude Tests. Don't start here.</div>
+      </div>
+      <div class="prow mid">
+        <div class="ptag">Mid · publisher-specific · contested</div>
+        <div class="pq"><span>SHL practice test</span><span>CCAT practice</span><span>Watson Glaser</span><span>Korn Ferry assessment</span><span>Aon cut-e</span><span>Pymetrics practice</span><span>HireVue questions</span></div>
+        <div class="verdict-inline">Winnable with depth + a great free tool. Publisher intent is strong and durable.</div>
+      </div>
+      <div class="prow tail">
+        <div class="ptag">Long tail · company-specific · the wedge</div>
+        <div class="pq"><span>Amazon online assessment practice</span><span>McKinsey Solve game</span><span>JPMorgan numerical test</span><span>Deloitte immersive assessment</span><span>PwC game based assessment</span><span>[bank] SJT answers</span><span>… in 3 days · free · how to pass</span></div>
+        <div class="verdict-inline">Highest intent, lowest competition, effectively unlimited variants. This is where instant visibility is realistic.</div>
+      </div>
+    </div>
+    <div class="two" style="margin-top:22px">
+      <div class="infocard">
+        <h4><span class="dotk"></span>Where the demand concentrates</h4>
+        <p><strong>UK &amp; EMEA</strong> is the epicentre — grad-scheme culture plus SHL's TalentCentral dominance. The whole prep ecosystem (JobTestPrep, AssessmentDay, Practice Aptitude Tests, GraduatesFirst) is UK-anchored.</p>
+        <p><strong>India</strong> is the fastest-growing, via campus placement (Mercer Mettl, AMCAT) — massive volume, mobile-first, very price-sensitive. A credible start-market with global product reuse.</p>
+      </div>
+      <div class="infocard note-card">
+        <h4><span class="dotk"></span>Grounding caveat — do this first</h4>
+        <p>The stratification above is grounded in the demand structure (funnel math, incumbent user counts of 1M+ and 400k+, the query taxonomy). <strong>Exact monthly volumes need a keyword tool</strong> (Ahrefs / Semrush) — that pull, filtered by keyword-difficulty, is validation step #1.</p>
+        <p>Note also: queries asked inside AI assistants aren't in keyword tools at all, so real demand runs higher than they show — an answer-engine-optimisation opening.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 THE USER -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>The user — who you're actually building for</h2></div>
+    <p class="muted">One primary persona drives most of the volume and the highest intent. Two secondary segments widen the funnel.</p>
+
+    <div class="persona">
+      <div class="p-hd">
+        <div class="who">
+          <div class="avatar">PS</div>
+          <div>
+            <div class="nm">Priya Sharma</div>
+            <div class="rl">22 · final-year Economics · UK university · applying to 15–25 grad schemes</div>
+          </div>
+        </div>
+        <span class="tag-primary">PRIMARY · ~70% OF INTENT</span>
+      </div>
+      <div class="p-quote">"I just got invited to a SHL test for the grad scheme I actually want — it's in five days, I've never done one, and I get one shot. What do I even practise?"</div>
+      <div class="p-grid">
+        <div class="pg">
+          <div class="lbl">Context</div>
+          <ul>
+            <li>Applying to finance / consulting / tech / law schemes in parallel</li>
+            <li>Juggling several <em>different</em> employers' tests at once</li>
+            <li>Broke student; her university may offer free prep access</li>
+          </ul>
+        </div>
+        <div class="pg">
+          <div class="lbl">Jobs to be done</div>
+          <ul>
+            <li>Work out which test / publisher this even is</li>
+            <li>Practise the exact format under real time pressure</li>
+            <li>Build speed + accuracy; kill the anxiety</li>
+            <li>Get a read on whether she's "good enough"</li>
+          </ul>
+        </div>
+        <div class="pg">
+          <div class="lbl">Pains with today's options</div>
+          <ul>
+            <li>Free resources are low-quality &amp; not representative</li>
+            <li>Paid packs are per-employer and add up fast</li>
+            <li>Norm-scoring hides the pass mark → no sense of progress</li>
+            <li>Gamified formats (Pymetrics, HireVue) feel alien</li>
+          </ul>
+        </div>
+        <div class="pg">
+          <div class="lbl">What she searches / pays</div>
+          <p>Searches "<b>[company] online assessment practice</b>", "SHL numerical practice free", "how to pass HireVue". Will pay £20–70 for the <em>specific</em> test under deadline — but bounces to free if it feels generic. Then, once hired, <strong>she's gone.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="secondary">
+      <div class="scard">
+        <div class="sh">Arjun — campus placement</div>
+        <div class="sm">SECONDARY · INDIA · HIGHEST VOLUME</div>
+        <p>Engineering/commerce student facing placement rounds (Mercer Mettl, AMCAT, company tests). Enormous volume, mobile-first, extremely price-sensitive, bilingual. The scale play — thin margins, huge funnel.</p>
+      </div>
+      <div class="scard">
+        <div class="sh">David — the career-switcher</div>
+        <div class="sm">SECONDARY · HIGHER WTP · UNDERSERVED</div>
+        <p>Mid-career professional hit with a CCAT / Wonderlic cognitive test for a new role. Lower volume, but higher stakes per instance, more willing to pay, and far less well served than the grad segment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 COMPETITORS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Competitive teardown — and the gaps</h2></div>
+    <p class="muted">The market isn't empty; it's tired. A few entrenched, SEO-driven, one-time-purchase players, a swamp of low-quality free bait, and outright scam sites that make trust a live issue. None is AI-native.</p>
+    <div class="tbl-wrap">
+      <table class="cmp">
+        <thead>
+          <tr><th>Player</th><th>Scale</th><th>Price</th><th>Strength</th><th>The gap you exploit</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="nm">JobTestPrep</div><div class="sub">the 30-yr incumbent</div></td>
+            <td>1M+ users<br>500+ packs</td>
+            <td>£39–69<br>per pack</td>
+            <td class="win">Company- &amp; publisher-specific packs; broad coverage</td>
+            <td class="gap">Dated UX; content often called "too easy"; per-pack pricing stacks up; no real AI feedback</td>
+          </tr>
+          <tr>
+            <td><div class="nm">AssessmentDay</div><div class="sub">London</div></td>
+            <td>Established</td>
+            <td>~£40 / yr</td>
+            <td class="win">More realistic difficulty; better value</td>
+            <td class="gap">Thinner explanations; less company-specific; static</td>
+          </tr>
+          <tr>
+            <td><div class="nm">Practice Aptitude Tests</div><div class="sub">freemium</div></td>
+            <td>400k+ users</td>
+            <td>Freemium</td>
+            <td class="win">Strong free tier &amp; SEO footprint</td>
+            <td class="gap">Content realism questioned; generic; no adaptive feedback</td>
+          </tr>
+          <tr>
+            <td><div class="nm">GraduatesFirst</div><div class="sub">ex-SHL psychologists</div></td>
+            <td>150+ tests</td>
+            <td>Low</td>
+            <td class="win">Psychometric credibility; covers gamified formats</td>
+            <td class="gap">Niche brand; limited reach; not AI-native</td>
+          </tr>
+          <tr>
+            <td><div class="nm">SHL Direct</div><div class="sub">the publisher itself</div></td>
+            <td>Official</td>
+            <td>Free / paid</td>
+            <td class="win">Authentic format for SHL tests</td>
+            <td class="gap">SHL only; sparse; a sampler, not a prep product</td>
+          </tr>
+          <tr>
+            <td><div class="nm">Scam / low-quality sites</div><div class="sub">the swamp</div></td>
+            <td>Many</td>
+            <td>Varies</td>
+            <td class="win">—</td>
+            <td class="gap">Fraud &amp; refund-dodging is common → a <b>trusted brand</b> is genuinely valuable here</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <span class="eyebrow">The composite gap</span>
+      Nobody offers all four of: a genuinely <strong>high-quality free tier</strong>, <strong>instant AI explanation/tutoring</strong> on every question, <strong>realistic timed simulation</strong> of the actual test, and <strong>cheap coverage of the long tail</strong> (every company + publisher + the new gamified formats). Each of those is exactly what an AI-native build does well — and what a per-pack, hand-authored incumbent structurally can't.
+    </div>
+  </div>
+</section>
+
+<!-- 05 OPPORTUNITY + CEILING -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>The opportunity — and the ceiling to design around</h2></div>
+    <p class="muted">The upside is clean: AI generation makes an infinite, <em>auto-verifiable</em> bank of numerical/logical items nearly free (you can machine-check every answer, which neutralises AI's usual accuracy risk), so you can out-cover and out-refresh the incumbents, give away a genuinely good free tier as the SEO wedge, and add the instant-feedback tutoring none of them have. That's how you get the "instant visibility" — rank the long tail, serve it at quality, convert the highest-intent moment in the funnel.</p>
+
+    <div class="callout warn">
+      <span class="eyebrow">The honest ceiling</span>
+      <strong>LTV.</strong> Priya preps for two weeks, then disappears the moment she's hired. There's no habit, no recurring need — so a <em>better product doesn't unlock proportionally more revenue</em>. That single fact is why the 30-year incumbent still sells one-time packs and why VCs stayed away. Build the best aptitude tool in the world and you still hit this wall — <strong>unless the business model escapes it.</strong> Pick your escape route on day one, not year three.
+    </div>
+
+    <div class="routes">
+      <div class="route">
+        <div class="rn">1</div>
+        <div>
+          <h4>Broaden the job-to-be-done</h4>
+          <p>Go from "pass this one test" to a <strong>whole-job-hunt companion</strong> — CV, applications, aptitude, interview, assessment centre, offer — with value across the months-long, multi-application search. Extends the window within a hunt and earns a reason to return for the next one.</p>
+          <div class="rmeta"><b>raises LTV</b> · <b>defends against a chatbot</b> · <b class="hard">scope creep risk</b></div>
+        </div>
+      </div>
+      <div class="route">
+        <div class="rn">2</div>
+        <div>
+          <h4>Geography-first grad funnel</h4>
+          <p>Own <strong>one high-volume ecosystem end-to-end</strong> — UK grad schemes, or India campus placement — via university/society partnerships, employer-specific packs, and careers-service distribution. Density beats breadth; global product reuse stays intact.</p>
+          <div class="rmeta"><b>distribution moat</b> · <b>keeps global upside</b> · <b class="hard">still per-candidate</b></div>
+        </div>
+      </div>
+      <div class="route">
+        <div class="rn">3</div>
+        <div>
+          <h4>Flip B2B / white-label</h4>
+          <p>Sell to the <strong>demand side</strong>: license the prep to universities &amp; bootcamps for their students (the free-access model — but you're the vendor), or to employers/assessment vendors for practice &amp; onboarding. Institutional, recurring revenue that escapes the per-candidate trap entirely.</p>
+          <div class="rmeta"><b>recurring revenue</b> · <b>breaks the ceiling</b> · <b class="hard">longer sales cycle</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="eyebrow">The durable moat</span>
+      Since AI-made questions aren't defensible, the one thing to build toward is a <strong>trusted, predictive score</strong> — "practise here, and your real result lands where we said." That concordance between practice performance and real outcomes is data a chatbot can't produce, and it's what converts free users to paid and employers to partners. Start collecting the signal from day one.
+    </div>
+  </div>
+</section>
+
+<!-- 06 WEDGE -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>The v1 wedge — what to actually ship</h2></div>
+    <p class="muted">Narrowest thing that proves the demand and the SEO thesis, built on the shared construct engine from the brief.</p>
+    <div class="seq">
+      <div class="seqstep"><div class="sn free">01</div><div><h4>Free, ungated, high-quality practice <span class="ph">acquisition · SEO wedge</span></h4><p>The three core constructs — <strong>numerical, verbal, logical</strong> — auto-verified and timed, no signup. Point it at the long tail: pages for top publishers (SHL, CCAT, Korn Ferry, Aon) and named employers. Rank where incumbents are thin; serve better than the free swamp.</p></div></div>
+      <div class="seqstep"><div class="sn grow">02</div><div><h4>Instant AI explanation on every item <span class="ph">the differentiator</span></h4><p>"Why C, and why not A/B/D" on demand — the tutoring none of the incumbents have. Turns a static question bank into a coach, and it's cheap because the domain is self-contained.</p></div></div>
+      <div class="seqstep"><div class="sn grow">03</div><div><h4>Account + readiness estimate <span class="ph">retention · data</span></h4><p>Save progress, track weak constructs, show a percentile readiness read (the thing norm-scoring hides). Free — but now you have a returning user and the item-response data that calibrates the bank and seeds the concordance moat.</p></div></div>
+      <div class="seqstep"><div class="sn pay">04</div><div><h4>Paid depth <span class="ph">monetization</span></h4><p>Full-length timed mocks under real test-day conditions, employer- and publisher-specific packs, gamified-format practice, richer analytics. Priced for the deadline-driven moment.</p></div></div>
+      <div class="seqstep"><div class="sn moat">05</div><div><h4>Escape-route + moat build <span class="ph">the actual company</span></h4><p>Run the chosen escape route (§05) in parallel from early, and grow the practice-to-outcome concordance into a score users and institutions trust. This is what turns a good product into a durable business.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 RISKS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="num">07</span><h2>Risks &amp; what to validate next</h2></div>
+    <div class="risks">
+      <div class="risk high"><div class="rt">Primary</div><h4>The LTV ceiling</h4><p>Transactional, one-off use caps a pure prep business. Mitigation = pick an escape route (§05) before building, not after.</p></div>
+      <div class="risk med"><div class="rt">Watch</div><h4>Moving target</h4><p>Gamified / AI-scored formats keep evolving. Manageable — the constructs underneath are stable and prep follows fast — but it's a permanent upkeep cost.</p></div>
+      <div class="risk med"><div class="rt">Watch</div><h4>Free-access headwind</h4><p>Universities give the prime grad segment free incumbent access. Argues for the long tail, the B2B/white-label flip, or a start-market where this is weaker (India).</p></div>
+      <div class="risk med"><div class="rt">Watch</div><h4>Head-term SEO is locked</h4><p>Incumbents own the high-volume terms. The whole thesis rests on winning the long tail — which must be verified, not assumed.</p></div>
+      <div class="risk med"><div class="rt">Watch</div><h4>Content QA</h4><p>AI items ship subtle defects. Auto-verifiability makes this far easier here than elsewhere, but the generate → validate → calibrate loop still has to be built.</p></div>
+      <div class="risk med"><div class="rt">Watch</div><h4>Validity tension</h4><p>Test-makers actively try to make tests un-gameable, and regulators (EU AI Act, EEOC) scrutinise assessment. An adversarial-but-established dynamic, not a blocker.</p></div>
+    </div>
+    <ul class="checklist">
+      <li><b>Pull the numbers.</b> Run the head / mid / long-tail keyword lists through Ahrefs or Semrush; rank by volume-to-difficulty. Confirms (or kills) the long-tail SEO thesis.</li>
+      <li><b>Pick the start-market.</b> UK (highest intent, free-access headwind) vs India (highest volume, price-sensitive). Decide where density is winnable first.</li>
+      <li><b>Choose the escape route now.</b> Broaden the job, geography-first, or B2B/white-label — the answer shapes the whole product.</li>
+      <li><b>Run a willingness-to-pay test.</b> Does the deadline-driven, high-intent moment convert at a price that works against a low-LTV audience?</li>
+      <li><b>Design the QA + concordance loop.</b> Item validation and the practice-to-outcome dataset are the real assets — architect them from the first build.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="rule"></div>
+    <p class="note">
+      <b>Working deep-dive — companion to the Category Brief.</b> A decision aid, not a final plan.<br>
+      <b>On demand data:</b> grounded in the demand structure — hiring-funnel math, adoption rates (80%+ Fortune 500 / ~75% Times Top 100), incumbent user counts (1M+, 400k+), pricing, and the observed query taxonomy. Precise per-keyword monthly volumes require a keyword tool and are validation step #1; treat market-size and adoption figures as directional third-party estimates.<br>
+      <b>On the persona:</b> a composite built from the graduate-recruitment and prep-market evidence, not a specific individual.<br>
+      <b>On IP:</b> generate original, style-based items measuring the same constructs — never reproduce a publisher's copyrighted items. Disclaim affiliation, as the established prep market does. Confirm specifics with counsel before launch.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

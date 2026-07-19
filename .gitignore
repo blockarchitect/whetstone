@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+
+# Secrets / env
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Research kit outputs (regenerable, may contain pulled data)
+tools/aptitude-market-research/data/
+tools/aptitude-market-research/output/

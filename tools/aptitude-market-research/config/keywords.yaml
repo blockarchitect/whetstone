@@ -1,0 +1,113 @@
+# ============================================================
+#  Seed frame for the aptitude / psychometric prep vertical.
+#  DataForSEO auto-expands each seed into its long tail.
+#  Edit freely — this is a starting point, not a ceiling.
+# ============================================================
+
+# Geographies to pull volumes/trends for (name: [location_code, iso2])
+# location_code = DataForSEO location; iso2 = Adzuna/Trends
+geographies:
+  uk:        {location_code: 2826, iso2: gb}
+  india:     {location_code: 2356, iso2: in}
+  us:        {location_code: 2840, iso2: us}
+  australia: {location_code: 2036, iso2: au}
+
+language: en
+
+# --- SEARCH DEMAND: the three tiers ---
+head_terms:
+  - aptitude test
+  - numerical reasoning test
+  - verbal reasoning test
+  - logical reasoning test
+  - psychometric test
+  - practice aptitude tests
+  - cognitive ability test
+  - situational judgement test
+
+publisher_terms:            # mid tier — publisher-specific
+  - shl test practice
+  - shl numerical reasoning
+  - korn ferry assessment
+  - talent q test
+  - ccat practice test
+  - criteria cognitive aptitude test
+  - watson glaser practice
+  - aon cut-e test
+  - cubiks test
+  - saville assessment
+  - wonderlic test practice
+  - pymetrics practice
+  - hirevue practice
+  - arctic shores assessment
+
+employer_terms:             # long tail — company-specific (the wedge)
+  - amazon online assessment practice
+  - mckinsey solve game practice
+  - jpmorgan online assessment
+  - goldman sachs assessment test
+  - deloitte immersive assessment
+  - pwc game based assessment
+  - ey assessment test
+  - kpmg aptitude test
+  - accenture assessment
+  - barclays assessment test
+  - hsbc situational judgement test
+  - civil service numerical test
+  - ubs assessment
+  - capgemini aptitude test
+
+intent_modifiers:           # appended to expand long tail
+  - free
+  - practice
+  - answers
+  - how to pass
+  - questions
+  - "with solutions"
+
+# --- COMPETITORS (for Similarweb traffic + SERP checks) ---
+competitor_domains:
+  - jobtestprep.com
+  - jobtestprep.co.uk
+  - assessmentday.co.uk
+  - practiceaptitudetests.com
+  - graduatesfirst.com
+  - assessment-training.com
+  - wikijob.co.uk
+  - prepterminal.com
+
+# --- FUNDING / GRAVEYARD (Crunchbase search terms) ---
+market_search_terms:
+  - psychometric testing
+  - pre-employment assessment
+  - aptitude test preparation
+  - test prep
+  - talent assessment
+  - hiring assessment
+
+# --- JOB-MARKET DEMAND PROXY (Adzuna queries) ---
+job_queries:
+  - graduate scheme
+  - graduate analyst
+  - graduate programme
+  - investment banking analyst
+
+# --- VOICE OF CUSTOMER (Reddit) ---
+reddit:
+  subreddits:
+    - UKJobs
+    - cscareerquestions
+    - consulting
+    - FinancialCareers
+    - jobs
+    - GetEmployed
+    - recruitinghell
+  search_terms:
+    - aptitude test
+    - SHL test
+    - psychometric test
+    - numerical reasoning
+    - pymetrics
+    - hirevue
+    - online assessment
+  limit_per_query: 40
