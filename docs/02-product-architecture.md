@@ -1,6 +1,19 @@
 # Product architecture — the engine, the skins, and how content stays true
 
-*Full reasoning + rejected alternatives: `memory/decisions.md` D2, D3, D10, D11, D14.*
+*Full reasoning + rejected alternatives: `memory/decisions.md` D2, D3, D10, D11, D14, D22.*
+
+## Vertical-agnostic by design: the platform vs. the plugin
+Everything in this document is built so the *engine* works for any test type, even
+though the *business* stays focused on one vertical (`01-strategy.md` — that's a
+brand/GTM decision, not an architecture one). Most of what follows is already generic
+almost by accident, because "config, not new pipeline" has been the instinct since the
+first version of this design. What needs actual discipline: the **construct generators**
+(the numerical/verbal/logical reasoning logic itself), **Test Intelligence's source
+list**, and the **skill taxonomy** below are the vertical-specific plugin surface —
+everything else (delivery strategies, UI shells, the item lifecycle, calibration) is
+platform. Concretely: schemas carry a `domain` field from day one, even shipping one
+domain. This is cheap now, expensive to retrofit — the same discipline as DIF-tagging
+and skill-taxonomy tagging elsewhere in this doc.
 
 ## The two-layer architecture
 The aptitude "too many formats" problem is cosmetic — underneath, the measured
@@ -148,6 +161,47 @@ scorer, `04-growth-engine.md`); approximate-but-improving is fine when formats a
 opaque/NDA'd, labeled honestly ("based on candidate reports, &lt;date&gt;").
 
 **Status:** committed direction, detailed design deferred → `open-questions.md` §D.
+
+## Market/vendor intelligence + geography scoping (extends the above)
+Test Intelligence above assumes you already know *which publisher* an employer uses,
+and sources what that publisher's test looks like — the "what." This adds the layer
+*before* it: **which vendor(s) does a given employer currently use at all** — the
+"who" — since that changes as employers switch providers (contract renewals, M&A).
+Cheap extension, not a new pipeline: **same sources as above**, tagged to also capture
+which vendor was mentioned, not just format detail. Plus two official, public sources
+specific to this question: **employer careers/FAQ pages** (often explicitly name the
+assessment partner) and **vendor case-study/client pages** (public, but lower-confidence
+for *currency* — marketing pages lag reality and showcase favorable clients only).
+
+**Currency reuses the existing drift-detection mechanism, extended by one field.** The
+post-test "was this like your real test?" prompt also captures *which vendor* it was,
+not just format match — the same "users close the loop" mechanism as above, not a new one.
+
+**Testing varies by geography — schema implication, not just a data point.** The same
+employer often uses different vendors/formats in different regions (a UK grad scheme vs.
+an India campus placement, for instance). This means a test-profile skin's identity
+isn't `{company, publisher}` — it's `{company, publisher, geography}`. Vendor-mapping
+and format records need a **geography field from day one** — same "instrument now, don't
+retrofit" pattern as DIF-tagging, skill taxonomy, and credential signing elsewhere in
+this record.
+
+**This sharpens the stakes of the open start-market decision** (`01-strategy.md`, D4):
+expanding to a second geography isn't just translating content/SEO — it's re-running
+vendor-mapping and format research for that market. A third axis of the D22 vertical-
+agnostic principle (domain portability, then product portability, now geography
+portability) — same discipline: don't hardcode geography assumptions into what's
+supposed to be a generic sourcing loop.
+
+**Nice byproduct:** the vendor-mapping data, once collected, is itself public-content
+material — "which assessment does [company] use" is a real search pattern, same
+AEO/citable-content play as the Reasoning Readiness Index (`04-growth-engine.md`).
+Building it for internal accuracy and shipping it as growth content are the same effort.
+
+**Guardrail:** demand-driven like the base framework above — track the company×geography
+pairs the D9 opportunity scorer says are worth it, starting with the chosen start-market,
+not globally from day one.
+
+**Status:** committed direction; open questions → `open-questions.md` §S.
 
 ## Item bank evolution: signal beyond accuracy
 Accuracy alone only feeds difficulty calibration (`03-data-and-trust.md`). The mechanism

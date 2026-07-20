@@ -46,7 +46,7 @@ a bad idea, don't cheerlead.
   vertical deep-dive (HTML).
 - `tools/aptitude-market-research/` — the API-first research kit (run in Claude Code;
   see its README). Pulls keywords, demand, competitor traffic, funding/graveyard, VoC.
-- `memory/decisions.md` — the decision record (D1–D15+). The historical *why*.
+- `memory/decisions.md` — the decision record (D1–D23+). The historical *why*.
 - `memory/open-questions.md` — the living brainstorm log: everything still open, grouped by area.
 
 ## How to work here

@@ -12,17 +12,17 @@ you need.
   doc below cites the D-numbers it's built from — go there for the full reasoning and
   rejected alternatives, not repeated here.
 - **`memory/open-questions.md` — the living brainstorm log.** Everything still unresolved,
-  grouped by area (§A–§J). Follow-ups from any conversation get appended there.
+  grouped by area (§A–§R). Follow-ups from any conversation get appended there.
 
 ## Topic docs
 | Doc | Covers | Key decisions |
 |---|---|---|
 | [`00-architecture-diagram.md`](00-architecture-diagram.md) | Visual block diagram of the whole platform, what's designed vs. still open | all of the below |
 | [`01-strategy.md`](01-strategy.md) | North star, vertical choice, business model, personas | D1, D5, D13 |
-| [`02-product-architecture.md`](02-product-architecture.md) | Construct engine, skins, delivery, test intelligence, item bank evolution | D2, D3, D10, D11, D14 |
-| [`03-data-and-trust.md`](03-data-and-trust.md) | Identity, IRT calibration, concordance model / the moat | D6, D12 |
-| [`04-growth-engine.md`](04-growth-engine.md) | GTM, pSEO/AEO loop, pre-intent audience capture | D4, D9, D15 |
-| [`05-tech-stack.md`](05-tech-stack.md) | Stack choices, no-AI-in-hot-path, MCP seam, tooling | D7, D8 |
+| [`02-product-architecture.md`](02-product-architecture.md) | Construct engine, skins, delivery, UI shells, test intelligence, item bank evolution, gamification, vertical-agnostic design | D2, D3, D10, D11, D14, D16, D21, D22 |
+| [`03-data-and-trust.md`](03-data-and-trust.md) | Identity, IRT calibration, concordance model / the moat, deep reporting, credential signing | D6, D12, D17, D20 |
+| [`04-growth-engine.md`](04-growth-engine.md) | GTM, pSEO/AEO loop, pre-intent audience capture, daily micro-content, LinkedIn, community/events | D4, D9, D15, D18, D19, D20 |
+| [`05-tech-stack.md`](05-tech-stack.md) | Stack choices, service boundaries, no-AI-in-hot-path, MCP seam, tooling | D7, D8, D23 |
 
 ## Maintenance rule
 When a topic doc goes stale (a new decision changes it), **edit it in place** — don't

@@ -253,17 +253,73 @@
     its own visual register (playful) distinct from the credential/report register
     (serious)?
 
+## Q. Vertical-agnostic architecture (D22) — [committed principle; applies as discipline, not a build item]
+69. **Domain-field schema pass.** [open] Concrete audit of every planned Zod schema
+    (item, construct, skin, credential) to confirm a `domain`/`vertical` field is
+    designed in before any of them ship, not retrofitted.
+70. **Formalize D1's evaluation framework.** [open] Write D1's rejected-alternatives
+    criteria (IP posture, verifiability, search demand, competitive landscape) up as an
+    explicit, reusable checklist — currently implicit in prose, not a usable artifact.
+71. **Where's the line on "generic"?** [open] Some things are genuinely ambiguous — e.g.
+    is the delivery-strategy menu (D10) truly vertical-agnostic, or does it quietly
+    assume MCQ-style items? Worth a real audit once a second domain is ever seriously
+    considered, not now.
+
+## R. Service boundaries (D23) — [committed direction; detailed design deferred]
+72. **API contract format.** [leaning: Zod-validated REST/HTTP] Confirm vs. reconsider
+    once real consumers exist — REST/OpenAPI-style vs. something else, given the explicit
+    goal of cross-product, potentially cross-repo reuse.
+73. **Worker/job runtime for Content Engine + Growth Engine.** [open] Vercel Cron/
+    serverless functions vs. a dedicated always-on worker — depends on real job
+    durations (AI calls, calibration batches) once they're measured, not guessed now.
+74. **Postgres schema-separation discipline.** [open] Concrete naming/access rules
+    (which app can read which schema, via API only vs. read-only views) — needs to be
+    written down before the first migration, not left implicit.
+75. **What does Growth Engine's public config surface look like?** [open] If it's meant
+    to be genuinely reusable, its config API (keyword seeds, domain, page-template hooks)
+    needs real design — this is the actual product surface of the "reusable tool" claim.
+76. **When does physical extraction actually trigger?** [open] What's the concrete
+    signal (a second real product? a scaling need?) that says "pull Content Engine or
+    Growth Engine into its own repo/deploy" — decide the trigger now so it's not a vague
+    someday.
+
+## S. Market/vendor intelligence + geography (D24) — [committed direction; detailed design deferred]
+77. **Vendor-confidence weighting.** [open] How to weight candidate-voice signal (recent
+    but low-volume for less-common employers) against vendor marketing pages (broad but
+    stale/self-selected) in a single confidence score.
+78. **Detecting a vendor switch, specifically.** [open] Distinguishing "we don't have
+    data yet" from "the vendor actually changed" is a real change-detection problem, not
+    just a missing-data one — needs its own logic, not a reuse of the base freshness check.
+79. **Geography taxonomy granularity.** [open] Country-level (matches existing
+    `keywords.yaml` geographies: UK/India/US/Australia) vs. finer region-level — start
+    coarse, only go finer if evidence demands it.
+80. **Re-verification cadence.** [open] Vendor contracts are typically multi-year — what's
+    a sane recheck interval that isn't wasted effort but also isn't stale for years.
+81. **Vendor-mapping content page design.** [open] The "which assessment does [company]
+    use" public page — ties to `open-questions.md` §O Q61's Readiness Index methodology
+    work; likely the same content system, worth designing together not separately.
+
+## T. SEO/AEO data flow (D25) — [committed direction; detailed design deferred]
+82. **Build-signal format.** [open] What exactly does a "this cluster is worth a skin"
+    message from Growth Engine to Content Engine look like — a queued job, a direct API
+    call, a shared opportunity table Content Engine polls? Pick one deliberately.
+83. **Event fan-out mechanism.** [open] How Platform's single event stream actually
+    splits to two consumers — dual API calls at write time, a message queue with two
+    subscribers, or a shared raw-events table both read from (weighing against D25's own
+    stated preference for separate typed calls over shared tables).
+84. **Page-rendering ownership, precisely.** [open] Confirm which app owns the actual
+    page-template logic that merges Content Engine's test data with Growth Engine's
+    SEO/AEO requirements — currently implied to be Platform, worth stating explicitly.
+85. **Latency requirements on each flow.** [open] Does calibration need near-real-time
+    event delivery, or is a daily batch fine? Same question for growth-scoring updates —
+    affects whether this needs a queue or a simple cron-based pull is sufficient.
+
 ---
 
 ## Parking lot / raw ideas (unsorted — promote to a section when they mature)
 Unvetted spitball ideas from a 2026-07-20 brainstorm. None designed, none committed —
 promote to a numbered decision if one gets pursued for real.
 
-- **Prediction-market self-wagers** — before sitting the real test, a candidate wagers
-  points (not money) on whether they'll pass. Loss-aversion/commitment psychology as a
-  possible unlock for the concordance label-collection problem (D12 §E) — the hardest
-  open problem in the venture. Worth a real design pass, not just a spitball, if D12
-  work starts before another solution is found.
 - **AI mock-recruiter debrief** — a personality-driven AI reaction to a completed
   practice test ("harsh mode" / "encouraging mode" toggle), layered onto the D17 report.
 - **Deliberately imperfect practice mode** — simulate real assessment-platform jank

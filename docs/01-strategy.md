@@ -76,7 +76,11 @@ style-based so **AI-generated originals are legal**, and the core constructs are
 **objectively verifiable** — which neutralises AI generation's biggest weakness. Global
 by nature. Full rejected-alternatives detail → decisions.md D1.
 
-**One vertical, not a unified multi-test platform** — deliberately.
+**One vertical, not a unified multi-test platform** — deliberately. This is a
+*business/brand* focus decision, not an architecture one: the underlying engine is kept
+deliberately vertical-agnostic (`02-product-architecture.md`, D22) so a future pivot or
+expansion — IT certs was already logged as the credible alternative — is a config swap,
+not a rebuild. Stay narrow on the outside, stay portable underneath.
 
 ## Business model & the LTV ceiling
 **Monetization is parked (~6 months out).** Everything is free right now — the job is

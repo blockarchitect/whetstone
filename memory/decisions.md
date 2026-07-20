@@ -798,6 +798,173 @@ decoration added after them.
 
 ---
 
+## D22 — Vertical-agnostic architecture: the platform vs. the plugin
+**Decided (principle).** The engine, delivery, and mechanisms should work for *any* test
+type, not just aptitude/psychometric — so a future pivot or expansion is a config swap,
+not a rebuild. Not new scope: it's the same discipline that's recurred throughout this
+record (DIF tagging D14, skill taxonomy D17, credential signing D20 — "instrument now or
+retrofit never") generalized one level up, applied everywhere, not just those four spots.
+
+**The split — most of the machinery is already generic, almost by accident, because
+"config, not new pipeline" has been the throughline since D3:**
+| Platform (vertical-agnostic, already mostly right) | Plugin (vertical-specific, needs discipline) |
+|---|---|
+| Delivery strategies (D10), UI shells (D16), IRT calibration (D12), item lifecycle/evolution (D14), gamification (D21), credential signing mechanism (D20), growth-engine machinery (D9), Test Intelligence's collect→synthesize→ratify→version loop (D11) | The construct generators themselves (D3 layer 1), Test Intelligence's *source list*, the hard-constraint specifics (which tests are IP-excluded), GTM seed keywords/personas (D4/D9), the skill taxonomy (D17) |
+
+**Concrete discipline this requires, cheap now / expensive to retrofit later:**
+- Item/construct schemas (Zod, D8) carry a `domain` field from day one, even with one
+  domain shipping.
+- Test Intelligence's source config is parameterized by vertical, not hardcoded to
+  publisher/employer sources.
+- The skill taxonomy (D17) is a per-domain pluggable config, not logic baked into the
+  reporting engine.
+- **D1's rejected-alternatives table is already a reusable evaluation framework** (IP
+  posture, verifiability, search demand, competitive landscape) — recognize it as that
+  explicitly, so assessing a future pivot is "run the framework again," not "start over."
+
+**Reconciles with D1, doesn't contradict it.** D1 ("one vertical, not a unified
+multi-test platform") is a *business/brand focus* decision — don't blur GTM, content
+investment, or brand across verticals. This is an *architecture* decision — don't let
+that focus leak into the engine as hardcoded assumptions. Stay narrow on the outside,
+stay portable underneath.
+
+**Guardrail against over-engineering.** This is "keep the seams clean and named," not
+"build a multi-vertical plugin marketplace now" — that would be exactly the speculative
+over-engineering the codebase's own engineering principles warn against (a seam for a
+real second use, not a hypothetical one). The cost here is genuinely small: field names
+and config boundaries, not a plugin framework.
+
+**Status:** committed direction/principle; applies retroactively as discipline to
+D2–D21, not a new build item on its own → `open-questions.md` §Q.
+
+---
+
+## D23 — Service boundaries: Platform / Content Engine / Growth Engine
+**Decided (direction).** Split the system into three independently deployable apps,
+staying in the **same Turborepo monorepo** (D8) rather than separate repos — independence
+comes from clean contracts, not physical repo separation:
+- **Platform** — the customer-facing Next.js app (delivery, reporting UI, gamification,
+  pSEO pages). **Whetstone-specific.**
+- **Content Engine** — the construct engine, item lifecycle, calibration (D3/D12/D14).
+  **Reusable across products.**
+- **Growth Engine** — the SEO/AEO tooling (D9). **Reusable across products** — this was
+  the explicit trigger for this decision: it should be usable by future ventures, not
+  wired into Whetstone.
+
+**The second axis of D22's principle.** D22 asked "can the engine serve a different
+*test type*." This asks "can the engine/tooling serve a different *product entirely*."
+Same mechanism both times: no product-specific hardcoding (keyword seeds, branding,
+domain names) lives *inside* Content Engine or Growth Engine — it's **supplied to them**
+as config from outside. Whetstone is their first customer, not baked into their core.
+
+**The mechanism that makes "independent yet seamlessly leveraged" real, not
+aspirational:**
+- **The only shared code is a type contract, never business logic.** A `schemas/`
+  package (Zod) with item/skin/growth-opportunity/credential definitions. Every app
+  compiles against it; none import each other's internals.
+- **Runtime communication is typed HTTP, not shared DB access.** Platform calls Content
+  Engine's API for items; it never reads its tables directly. Same for Growth Engine.
+  This is what makes the boundary real instead of convenient fiction.
+- **Each app owns its own Postgres schema** — same Neon instance for now (no reason to
+  pay for three databases on day one, doesn't contradict D8), logically separated so a
+  future physical split is a config change, not a migration project.
+
+**A real decision, not a default:** for the Content-Engine/Growth-Engine boundary
+specifically, lean toward **plain Zod-validated HTTP APIs over tRPC**, even though tRPC
+is the more natural TS-monorepo choice. tRPC ties consumers to sharing this exact
+type-import setup — fine internally, but works against "usable by other products" the
+moment a consumer isn't in this repo. Standard HTTP is the more portable default given
+the explicit reuse goal.
+
+**Open, not resolved:** Content Engine and Growth Engine are batch/worker-shaped
+(scheduled jobs, AI calls, longer-running) — a different runtime profile than Platform's
+low-latency serving. Whether that's Vercel Cron functions or a separate worker process
+isn't decided.
+
+**Guardrail against over-engineering.** All of this fits in the *same* repo on day one —
+not three infra stacks now. Physical extraction (separate repo/deploy target, independent
+scaling) is a lever to pull when a second product genuinely needs it, not before. Same
+discipline as D22.
+
+**Status:** committed direction; open questions in `open-questions.md` §R.
+
+---
+
+## D24 — Market/vendor intelligence + geography scoping (extends D11)
+**Decided (direction).** Two additions to Test Intelligence (D11).
+
+**1. Vendor mapping — the "who," not just the "what."** D11 assumes you already know
+which publisher an employer uses and sources what that publisher's test looks like. This
+adds the layer before it: which vendor(s) a given employer currently uses at all, since
+that changes as employers switch providers (contract renewals, M&A). **Cheap extension,
+not a new pipeline** — same sources D11 already pulls (candidate voice), tagged to also
+capture which vendor was mentioned. Plus two vendor-specific public sources: employer
+careers/FAQ pages (often name the assessment partner directly) and vendor case-study/
+client pages (public, but lower-confidence for *currency* — marketing lags reality and
+showcases favorable clients only).
+
+**Currency reuses D11's existing drift-detection mechanism, extended by one field.** The
+post-test "was this like your real test?" prompt also captures which vendor it was — the
+same "users close the loop" mechanism, not a new one.
+
+**2. Geography scoping — a schema implication, not just a data point.** The same
+employer often uses different vendors/formats in different regions (UK grad scheme vs.
+India campus placement, e.g.). A test-profile skin's identity isn't `{company,
+publisher}` — it's `{company, publisher, geography}`. Vendor-mapping and format records
+need a **geography field from day one** — same "instrument now, don't retrofit" pattern
+as DIF-tagging (D14), skill taxonomy (D17), credential signing (D20).
+
+**Sharpens D4's stakes.** Expanding to a second start-geography isn't just translating
+content/SEO — it's re-running vendor-mapping and format research for that market. **A
+third axis of D22's principle** (domain portability → D22, product portability → D23,
+now geography portability) — same discipline: don't hardcode geography assumptions into
+a supposedly generic sourcing loop.
+
+**Nice byproduct:** the vendor-mapping data is itself public-content material — "which
+assessment does [company] use" is a real search pattern, same AEO play as the Reasoning
+Readiness Index (D20). Building it for accuracy and shipping it as growth content are
+the same effort.
+
+**Guardrail:** demand-driven like D11 — track company×geography pairs the D9 opportunity
+scorer says are worth it, starting with the chosen start-market, not globally.
+
+**Status:** committed direction; open questions in `open-questions.md` §S.
+
+---
+
+## D25 — SEO/AEO data flow across the three apps (extends D23)
+**Decided (direction).** "Growth Engine decides what to build, Content Engine builds it,
+Platform delivers it" is the right forward-flow framing, but there's an equally
+important backward flow it leaves out: **measurement forks into two, not one loop back.**
+
+**Forward (decide → build → deliver):** Growth Engine scores an opportunity and sends
+Content Engine a build signal — this company × publisher × geography cluster is worth a
+skin. Content Engine's Test Intelligence (D24) sources the real detail; the construct
+engine generates + calibrates the items; it's exposed as a skin via API (D23). Platform
+renders **both** the test-taking experience **and** the pSEO page — combining Content
+Engine's real test data with Growth Engine's separate SEO/AEO requirements (schema.org,
+meta patterns, target keyword cluster). The page is a genuine tool wearing SEO clothing,
+not the reverse.
+
+**Backward (measure → recalibrate / measure → reprioritize) — the fork.** Platform
+captures **one raw event stream**. It splits to two different consumers for two
+different purposes:
+- **→ Content Engine:** item-response data (correct/incorrect, timing, distractor
+  choice) feeds IRT calibration and item-bank evolution (D12/D14).
+- **→ Growth Engine:** page-level traffic/engagement data, alongside GSC data pulled
+  independently, closes its own opportunity-scoring loop (D9) — which clusters are
+  actually working, prune vs. expand.
+
+Same source, two destinations, two different jobs. Neither consumer needs the other's
+half of the stream — this is itself an argument for D23's schema-per-app separation:
+Content Engine's calibration tables and Growth Engine's traffic-scoring tables are
+different shapes, populated from the same Platform-captured events via two separate
+typed API calls (or a fan-out event queue), not one shared table both read from.
+
+**Status:** committed direction; open questions in `open-questions.md` §T.
+
+---
+
 ## Reference — where things live now
 This file is the **historical reasoning log** (why we decided X, what we rejected) — it
 stays append-only and chronological. Two other places hold the material that used to

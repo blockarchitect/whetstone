@@ -1,6 +1,46 @@
 # Tech stack & tooling
 
-*Full reasoning + rejected alternatives: `memory/decisions.md` D7, D8.*
+*Full reasoning + rejected alternatives: `memory/decisions.md` D7, D8, D23.*
+
+## Service boundaries: Platform / Content Engine / Growth Engine
+Three independently deployable apps, all in the **same Turborepo monorepo** — not
+separate repos. Independence comes from clean contracts, not physical repo separation.
+
+![Whetstone service boundaries](service-boundaries-diagram.svg)
+
+- **Platform** — the customer-facing Next.js app (delivery, reporting, gamification,
+  pSEO pages). Whetstone-specific.
+- **Content Engine** — the construct engine, item lifecycle, calibration
+  (`02-product-architecture.md`, `03-data-and-trust.md`). **Reusable across products.**
+- **Growth Engine** — the SEO/AEO tooling (`04-growth-engine.md`). **Reusable across
+  products** — designed so a future venture can use it without touching Whetstone.
+
+**What makes "independent yet seamlessly leveraged" real, not aspirational:**
+- **The only shared code is a type contract, never business logic** — a `schemas/`
+  package (Zod) with item/skin/growth-opportunity/credential definitions. Every app
+  compiles against it; none import each other's internals.
+- **Runtime communication is typed HTTP, not shared DB access.** Platform calls Content
+  Engine's API for items; it never reads its tables directly.
+- **Each app owns its own Postgres schema** — same Neon instance for now, logically
+  separated so a future physical split is a config change, not a migration project.
+- **No product-specific hardcoding inside Content Engine or Growth Engine** — keyword
+  seeds, branding, domain names get supplied to them as config from outside. Whetstone
+  is their first customer, not baked into their core. This is the D22 vertical-agnostic
+  principle applied to a second, independent axis: cross-*product* portability, not just
+  cross-*test-type* portability.
+
+**A real decision, not a default:** lean toward **plain Zod-validated HTTP APIs over
+tRPC** for the Content-Engine/Growth-Engine boundary specifically — tRPC ties consumers
+to sharing this exact type-import setup, which works against reuse the moment a consumer
+isn't in this repo.
+
+**Open:** the worker/job runtime for Content Engine + Growth Engine (Vercel Cron vs. a
+dedicated worker) isn't decided — they're batch/AI-call-shaped, a different profile than
+Platform's low-latency serving. → `open-questions.md` §R.
+
+**Guardrail:** all of this fits in the same repo on day one. Physical extraction to a
+separate repo/deploy target is a lever to pull when a second product genuinely needs it,
+not before.
 
 ## Stack
 One TypeScript codebase, chosen for maximum coding-agent velocity (dense training
