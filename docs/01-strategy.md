@@ -118,3 +118,20 @@ Intelligence framework** (`02-product-architecture.md`). Most everything else is
 Priya's "15–25 applications over weeks" pattern is the basis for the **retention-inside-
 the-hunt** mechanic used in the concordance-label strategy (`03-data-and-trust.md`) and
 the **pre-intent audience capture** channel (`04-growth-engine.md`).
+
+**Concrete stakes, from the source deep-dive (`reports/aptitude-vertical-deep-dive_2.html`):**
+- **One attempt, then a 6–12 month cooling-off** before a retake at *that specific
+  employer*. There's no "try again tomorrow" on the real thing — only on practice. This
+  is why the readiness estimate (`03-data-and-trust.md`) matters as much as it does, and
+  it sharpens (doesn't contradict) the retention-inside-the-hunt mechanic: the comeback
+  loop is driven by prepping for the *next different* employer, not retaking the same one.
+- **The funnel the test decides:** illustratively, ~20,000 applicants → ~2,000 pass the
+  aptitude filter → ~200 hired for one large graduate scheme. The test does most of the
+  filtering, in hours.
+- **Pricing anchors** for whenever monetization unparks: incumbent prep runs
+  £39–69/pack (JobTestPrep) to ~£40/yr (AssessmentDay) — real market comparables, not a
+  guess, for the eventual plan-config stub above.
+- **The differentiation thesis, stated crisply:** no incumbent offers all four of a
+  genuinely good free tier, instant AI explanation on every item, realistic timed
+  simulation, and cheap long-tail coverage at once. Each is something an AI-native build
+  does well and a per-pack, hand-authored incumbent structurally can't.

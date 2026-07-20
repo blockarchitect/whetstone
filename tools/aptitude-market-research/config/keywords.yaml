@@ -40,6 +40,10 @@ publisher_terms:            # mid tier — publisher-specific
   - pymetrics practice
   - hirevue practice
   - arctic shores assessment
+  # India-specific publishers — dominant in campus placement, named in the
+  # aptitude-vertical deep-dive but missing from the original seed list
+  - mercer mettl test
+  - amcat practice test
 
 employer_terms:             # long tail — company-specific (the wedge)
   - amazon online assessment practice
