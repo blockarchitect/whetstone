@@ -4,5 +4,6 @@ pandas>=2.1
 pyyaml>=6.0
 openpyxl>=3.1
 pytrends>=4.9
+urllib3<2  # pytrends still uses urllib3's removed `method_whitelist` kwarg internally
 praw>=7.7
 tenacity>=8.2

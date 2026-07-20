@@ -14,8 +14,20 @@
 1. **Escape route / LTV ceiling (D5).** [resolved-in-direction → D13] Not "B2B as one option"
    — B2B-as-trusted-assessor is the actual destination (D13). Monetization mechanics still
    ~6 months out / parked; free until traction. Revisit sequencing once there's an audience.
-2. **Start market — UK vs India (D4).** [blocked: on real keyword volumes] Highest-intent (UK)
-   vs highest-volume/price-sensitive (India). Decide where density is winnable first.
+2. **Start market — UK vs India (D4).** [leaning: UK, pending DataForSEO volumes to confirm]
+   Highest-intent (UK) vs highest-volume/price-sensitive (India). Decide where density is
+   winnable first. **Preliminary evidence, 2026-07-20 (live Google Trends pull, `tools/
+   aptitude-market-research`):** India's raw "aptitude test" interest looks highest (63.2 vs
+   GB 48.3 on Trends' relative scale), but rising-query composition tells a different story —
+   in the sampled rising queries, only ~5% of India's signal volume is genuinely on-thesis
+   (corporate pre-employment testing); ~95% is academic-admissions (CUET, IISER) and
+   government/PSU banking-exam (SBI PO) demand — categories D1 already explicitly excludes.
+   GB's signal is ~78% on-thesis by the same method (once "plural strategy" was identified as
+   a real employer, not noise — see keywords.yaml). **Caveats:** small sample (110 rising
+   queries total, 57 India / 53 GB), Trends is a relative index not absolute volume, and this
+   needs confirming against real DataForSEO volumes before treating as decisive — but it's a
+   real, live signal that reframes the "India = highest volume" framing as possibly true only
+   for off-thesis demand. Re-run this same relevance analysis once DataForSEO volumes land.
 3. **Willingness-to-pay.** [parked with monetization] Does the deadline-driven moment convert at
    a workable price? Test later via fake-door.
 4. **Monetization placeholder.** [parked] What shape is the pricing/plan **config stub** (plans

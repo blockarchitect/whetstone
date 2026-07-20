@@ -56,6 +56,13 @@ employer_terms:             # long tail — company-specific (the wedge)
   - civil service numerical test
   - ubs assessment
   - capgemini aptitude test
+  # discovered via live Google Trends rising-queries pull, 2026-07-20 —
+  # real, current search demand not in the original hand-picked seed list
+  - plural strategy numerical reasoning test
+  - osborne clarke verbal reasoning test
+  - lek numerical reasoning test
+  - tech mahindra psychometric test
+  - agoda numerical reasoning test
 
 intent_modifiers:           # appended to expand long tail
   - free
