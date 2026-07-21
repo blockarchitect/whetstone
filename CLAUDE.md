@@ -67,10 +67,20 @@ a bad idea, don't cheerlead.
 - Keep this file lean — it's a map. If the map itself changes (new pillar, renamed
   doc), update it; strategy detail belongs in `docs/`, not here.
 
-## Status / next
-- Research kit built but **untested against live APIs** — expect to debug on first run.
-- Architecture largely designed (see `docs/`); nothing built yet (no app code, repo just seeded).
-- The two genuinely-open engineering problems: the **data spine → concordance**
-  (`docs/03-data-and-trust.md`) and the **Test Intelligence** framework
-  (`docs/02-product-architecture.md`). Monetization + auth parked.
-- Next concrete step: **pull real keyword volumes** (unblocks start-market + the v1 pSEO page).
+## Status / next  (updated 2026-07-21)
+- **Paused code to formalize requirements + architecture first (D27).** We scaffolded the
+  MVP too early; before resuming build we produce a requirements spec + an architecture/
+  design doc. `docs/question-types.md` (coverage catalogue) is the first of these — done.
+  **Next: write the requirements spec, then the arch/design doc. Do not resume Phase 3 code
+  until those exist.**
+- **MVP build so far (in `platform/`):** Phases 1–2 done and green — Drizzle/Neon schema
+  (6 tables), Zod validation with legal-disclaimer + answer-key guards, and 83 validated
+  items (25 numerical / 25 verbal / 25 logical / 8 diagrammatic) across 12 UK skins + a
+  seed script. Phases 3 (test-taking UI), 4 (SEO), 5 (deploy — needs Neon + Vercel) not
+  started. See `plans/active.md`. Scope = D26; MVP question coverage = `docs/question-types.md`.
+- **Still open (deferred by D26):** data spine → concordance, Test Intelligence framework,
+  the generative content engine, monetization + auth.
+- **Research kit** (`tools/`): built, Trends module debugged and run; DataForSEO keyword
+  volumes still un-pulled (needs `.env` keys). Start market decided UK for MVP (D26).
+- **Environment note:** this repo is `blockarchitect/whetstone`. Launch Claude Code with
+  this folder as the project root (not a parent dir) or the file pane can't render its files.

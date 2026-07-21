@@ -1019,6 +1019,34 @@ for consistency, then inlined into `content/items.yaml` — the generator stays 
 
 ---
 
+## D27 — Pause code; formalize requirements + architecture before building further
+**Decided 2026-07-21.** After scaffolding the MVP (Phases 1–2 done) and hitting the
+diagrammatic-construct gap mid-build, Ankur's call: **we started building too early.** We
+went strategy/decisions (D1–D26) → build plan (`plans/active.md`) → code, without a formal
+**requirements spec** or **product architecture/design doc** in between. The diagrammatic
+miss was a symptom — requirements were implicit, so a whole construct family surfaced only
+when reviewing samples.
+
+**Decision:** stop new code. Before resuming (esp. before the Phase 3 UI and any "real
+engine" work), produce, in order:
+1. **Question-types / coverage catalogue** — done: `docs/question-types.md` (full type list,
+   MVP-marked; the coverage roadmap).
+2. **Requirements spec** — functional + non-functional requirements for the product (not yet
+   written).
+3. **Architecture / design doc** — the system design for the app (not yet written).
+
+**What is NOT wasted:** the Phase 1–2 build (schema + 83 validated items + 12 skins + seed
+script) is a real asset under any plan, and building it cheaply *proved* the shared-pool
+architecture works. Pausing costs nothing — we're at a clean, fully-committed checkpoint.
+
+**Status of the MVP build when paused:** Phases 1 (scaffold/schema/migration) and 2
+(content) done and green; Phases 3 (test-taking UI), 4 (SEO), 5 (deploy — blocked on Neon +
+Vercel) not started. ~40% of the *build plan*, but the build plan is a sequence, not a
+requirements/arch spec — which is exactly the gap this decision closes. Resume code only
+after items 2 and 3 above exist.
+
+---
+
 ## Reference — where things live now
 This file is the **historical reasoning log** (why we decided X, what we rejected) — it
 stays append-only and chronological. Two other places hold the material that used to

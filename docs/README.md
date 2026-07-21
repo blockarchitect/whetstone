@@ -23,6 +23,7 @@ you need.
 | [`03-data-and-trust.md`](03-data-and-trust.md) | Identity, IRT calibration, concordance model / the moat, deep reporting, credential signing | D6, D12, D17, D20 |
 | [`04-growth-engine.md`](04-growth-engine.md) | GTM, pSEO/AEO loop, pre-intent audience capture, daily micro-content, LinkedIn, community/events | D4, D9, D15, D18, D19, D20 |
 | [`05-tech-stack.md`](05-tech-stack.md) | Stack choices, service boundaries, no-AI-in-hot-path, MCP seam, tooling | D7, D8, D23 |
+| [`question-types.md`](question-types.md) | Full catalogue of aptitude question types + styles, marked for MVP coverage | D3, D26 |
 
 ## Maintenance rule
 When a topic doc goes stale (a new decision changes it), **edit it in place** — don't
