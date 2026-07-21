@@ -2,17 +2,27 @@ import { z } from "zod";
 import { createInsertSchema } from "drizzle-zod";
 import { items, testProfiles } from "@/db/schema";
 
-export const optionSchema = z.object({
-  id: z.string().min(1),
-  text: z.string().min(1),
-});
+export const constructValues = ["numerical", "verbal", "logical", "diagrammatic"] as const;
+
+// An option is text (numerical/verbal/logical) or an SVG figure (diagrammatic).
+// At least one must be present.
+export const optionSchema = z
+  .object({
+    id: z.string().min(1),
+    text: z.string().min(1).optional(),
+    svg: z.string().min(1).optional(),
+  })
+  .refine((o) => o.text !== undefined || o.svg !== undefined, {
+    message: "option must have either text or svg",
+  });
 
 // Safe to ship to the client mid-attempt — no correctOptionId. This is the
 // ONLY shape the test-taking UI ever fetches for an active attempt.
 export const itemContentSchema = z.object({
   id: z.string(),
-  construct: z.enum(["numerical", "verbal", "logical"]),
+  construct: z.enum(constructValues),
   stem: z.string(),
+  figureSvg: z.string().nullable().optional(),
   options: z.array(optionSchema).min(2),
 });
 export type ItemContent = z.infer<typeof itemContentSchema>;
@@ -21,6 +31,7 @@ export type ItemContent = z.infer<typeof itemContentSchema>;
 // actually among options — catches a bad key at seed time, not in production.
 export const itemSchema = createInsertSchema(items, {
   options: () => z.array(optionSchema).min(2),
+  figureSvg: () => z.string().nullable().optional(),
   tags: () => z.array(z.string()).default([]),
 }).superRefine((val, ctx) => {
   if (!val.options.some((o) => o.id === val.correctOptionId)) {
@@ -56,7 +67,7 @@ export const seedItemSchema = itemSchema;
 
 export const seedSkinItemRefSchema = z.object({
   itemId: z.string(),
-  section: z.enum(["numerical", "verbal", "logical"]).optional(),
+  section: z.enum(constructValues).optional(),
 });
 
 export const seedSkinSchema = z.object({

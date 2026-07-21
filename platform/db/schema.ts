@@ -10,7 +10,12 @@ import {
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
-export const constructEnum = pgEnum("construct", ["numerical", "verbal", "logical"]);
+export const constructEnum = pgEnum("construct", [
+  "numerical",
+  "verbal",
+  "logical",
+  "diagrammatic",
+]);
 export const skinTierEnum = pgEnum("skin_tier", ["publisher", "employer"]);
 // Only "linear" is valid for the MVP (D26). Extend the enum later for adaptive
 // strategies (D10) — never rename this value, other code will reference it.
@@ -28,7 +33,10 @@ export const eventTypeEnum = pgEnum("event_type", [
 
 export interface ItemOption {
   id: string;
-  text: string;
+  // Text items use `text`; diagrammatic items use `svg` (self-contained SVG
+  // markup). At least one is present — enforced in the Zod layer.
+  text?: string;
+  svg?: string;
 }
 
 export interface AttemptScore {
@@ -42,6 +50,9 @@ export const items = pgTable("items", {
   id: text("id").primaryKey(), // stable authoring slug, e.g. "num-014" — not a serial
   construct: constructEnum("construct").notNull(),
   stem: text("stem").notNull(),
+  // Optional self-contained SVG shown with the stem (the figure sequence for a
+  // diagrammatic item). Null for text-based items.
+  figureSvg: text("figure_svg"),
   options: jsonb("options").$type<ItemOption[]>().notNull(),
   correctOptionId: text("correct_option_id").notNull(),
   explanation: text("explanation"),

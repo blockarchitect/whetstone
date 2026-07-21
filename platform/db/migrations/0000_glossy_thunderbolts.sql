@@ -1,5 +1,5 @@
 CREATE TYPE "public"."attempt_status" AS ENUM('in_progress', 'completed', 'abandoned');--> statement-breakpoint
-CREATE TYPE "public"."construct" AS ENUM('numerical', 'verbal', 'logical');--> statement-breakpoint
+CREATE TYPE "public"."construct" AS ENUM('numerical', 'verbal', 'logical', 'diagrammatic');--> statement-breakpoint
 CREATE TYPE "public"."delivery_mode" AS ENUM('linear');--> statement-breakpoint
 CREATE TYPE "public"."event_type" AS ENUM('page_view', 'test_started', 'test_completed');--> statement-breakpoint
 CREATE TYPE "public"."skin_tier" AS ENUM('publisher', 'employer');--> statement-breakpoint
@@ -16,6 +16,7 @@ CREATE TABLE "items" (
 	"id" text PRIMARY KEY NOT NULL,
 	"construct" "construct" NOT NULL,
 	"stem" text NOT NULL,
+	"figure_svg" text,
 	"options" jsonb NOT NULL,
 	"correct_option_id" text NOT NULL,
 	"explanation" text,

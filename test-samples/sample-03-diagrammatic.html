@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whetstone — diagrammatic items (real render)</title>
+<style>
+  body{margin:0;background:#F7F8FA;color:#1A1D23;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+  header{padding:40px 0 20px;border-bottom:1px solid #E5E8EC;margin-bottom:6px}
+  h1{font-size:1.5rem;margin:0 0 6px}
+  .sub{color:#565A63;font-size:.92rem;margin:0}
+  .bar{position:sticky;top:0;background:#F7F8FA;padding:14px 0;border-bottom:1px solid #E5E8EC;display:flex;gap:12px;align-items:center;margin-top:14px}
+  .toggle{display:inline-flex;border:1px solid #E5E8EC;border-radius:8px;overflow:hidden;background:#fff}
+  .toggle button{border:0;background:transparent;padding:8px 14px;font:inherit;font-size:.88rem;cursor:pointer;color:#565A63}
+  .toggle button.on{background:#2751E0;color:#fff}
+  .q{background:#fff;border:1px solid #E5E8EC;border-radius:12px;padding:22px 24px;margin-top:16px}
+  .q-id{font-family:ui-monospace,Menlo,monospace;font-size:.72rem;color:#8A8F98;margin-bottom:8px}
+  .stem{font-size:1.02rem;margin:0 0 14px}
+  .figrow{margin:0 0 18px}
+  .figrow svg{width:100%;max-width:360px;height:auto}
+  .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:440px}
+  .opt{border:1px solid #E5E8EC;border-radius:9px;padding:8px;text-align:center}
+  .opt .figbox svg{width:100%;height:auto}
+  .opt .olt{font-weight:600;color:#565A63;font-size:.82rem;margin-top:4px}
+  .opt .check{display:none;color:#1B8A5A;font-weight:700;font-size:.72rem;margin-top:2px}
+  .reveal .opt.correct{background:#E4F4EC;border-color:#B7E0CB}
+  .reveal .opt.correct .check{display:block}
+  .expl{margin-top:14px;padding:12px 14px;background:#EAF0FF;border-radius:9px;font-size:.9rem;color:#565A63;display:none}
+  .reveal .expl{display:block}
+  .expl b{color:#1A1D23}
+</style></head><body>
+<div class="wrap">
+  <header><h1>Diagrammatic items — real render</h1>
+  <p class="sub">All 8 diagrammatic items, rendered from the actual SVGs in content/items.yaml (not a mockup).</p></header>
+  <div class="bar"><div class="toggle"><button id="c">Candidate view</button><button id="r" class="on">Review view</button></div></div>
+  <main id="m" class="reveal">
+      <div class="q">
+        <div class="q-id">dgm-001</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="figrow"><svg viewBox="0 0 332 74" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><g transform="rotate(0 37 37)"><line x1="37" y1="54" x2="37" y2="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="28,29 37,20 46,29" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(86 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><g transform="rotate(90 37 37)"><line x1="37" y1="54" x2="37" y2="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="28,29 37,20 46,29" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(172 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><g transform="rotate(180 37 37)"><line x1="37" y1="54" x2="37" y2="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="28,29 37,20 46,29" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(258 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><text x="37" y="47" text-anchor="middle" font-size="30" fill="#8A8F98" font-family="sans-serif">?</text></g></svg></div>
+        <div class="opts">
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><g transform="rotate(0 37 37)"><line x1="37" y1="54" x2="37" y2="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="28,29 37,20 46,29" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div>
+          <div class="olt">A</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><g transform="rotate(90 37 37)"><line x1="37" y1="54" x2="37" y2="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="28,29 37,20 46,29" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div>
+          <div class="olt">B</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><g transform="rotate(180 37 37)"><line x1="37" y1="54" x2="37" y2="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="28,29 37,20 46,29" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div>
+          <div class="olt">C</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt correct">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><g transform="rotate(270 37 37)"><line x1="37" y1="54" x2="37" y2="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="28,29 37,20 46,29" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div>
+          <div class="olt">D</div><div class="check">✓ correct</div>
+        </div></div>
+        <div class="expl"><b>Answer.</b> The arrow rotates 90° clockwise each step: up, right, down, then left. The next figure is the arrow pointing left.</div>
+      </div>
+      <div class="q">
+        <div class="q-id">dgm-002</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="figrow"><svg viewBox="0 0 332 74" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><rect x="16" y="16" width="42" height="42" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="16" r="6" fill="#2A2F37"/></g><g transform="translate(86 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><rect x="16" y="16" width="42" height="42" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="58" cy="16" r="6" fill="#2A2F37"/></g><g transform="translate(172 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><rect x="16" y="16" width="42" height="42" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="58" cy="58" r="6" fill="#2A2F37"/></g><g transform="translate(258 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><text x="37" y="47" text-anchor="middle" font-size="30" fill="#8A8F98" font-family="sans-serif">?</text></g></svg></div>
+        <div class="opts">
+        <div class="opt correct">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="16" width="42" height="42" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="58" r="6" fill="#2A2F37"/></svg></div>
+          <div class="olt">A</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="16" width="42" height="42" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="16" r="6" fill="#2A2F37"/></svg></div>
+          <div class="olt">B</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="16" width="42" height="42" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="58" cy="16" r="6" fill="#2A2F37"/></svg></div>
+          <div class="olt">C</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="16" width="42" height="42" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="37" cy="37" r="6" fill="#2A2F37"/></svg></div>
+          <div class="olt">D</div><div class="check">✓ correct</div>
+        </div></div>
+        <div class="expl"><b>Answer.</b> The dot moves one corner clockwise each step: top-left, top-right, bottom-right, then bottom-left.</div>
+      </div>
+      <div class="q">
+        <div class="q-id">dgm-003</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="figrow"><svg viewBox="0 0 332 74" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><polygon points="37.0,13.0 57.8,49.0 16.2,49.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(86 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><polygon points="37.0,13.0 61.0,37.0 37.0,61.0 13.0,37.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(172 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><polygon points="37.0,13.0 59.8,29.6 51.1,56.4 22.9,56.4 14.2,29.6" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(258 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><text x="37" y="47" text-anchor="middle" font-size="30" fill="#8A8F98" font-family="sans-serif">?</text></g></svg></div>
+        <div class="opts">
+        <div class="opt correct">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><polygon points="37.0,13.0 57.8,25.0 57.8,49.0 37.0,61.0 16.2,49.0 16.2,25.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">A</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><polygon points="37.0,13.0 59.8,29.6 51.1,56.4 22.9,56.4 14.2,29.6" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">B</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><polygon points="37.0,13.0 55.8,22.0 60.4,42.3 47.4,58.6 26.6,58.6 13.6,42.3 18.2,22.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">C</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><polygon points="37.0,13.0 61.0,37.0 37.0,61.0 13.0,37.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">D</div><div class="check">✓ correct</div>
+        </div></div>
+        <div class="expl"><b>Answer.</b> Each shape has one more side than the last: 3, 4, 5, then 6 (a hexagon).</div>
+      </div>
+      <div class="q">
+        <div class="q-id">dgm-004</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="figrow"><svg viewBox="0 0 332 74" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><circle cx="37" cy="37" r="5" fill="#2A2F37"/></g><g transform="translate(86 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><circle cx="30" cy="37" r="5" fill="#2A2F37"/><circle cx="44" cy="37" r="5" fill="#2A2F37"/></g><g transform="translate(172 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><circle cx="23" cy="37" r="5" fill="#2A2F37"/><circle cx="37" cy="37" r="5" fill="#2A2F37"/><circle cx="51" cy="37" r="5" fill="#2A2F37"/></g><g transform="translate(258 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><text x="37" y="47" text-anchor="middle" font-size="30" fill="#8A8F98" font-family="sans-serif">?</text></g></svg></div>
+        <div class="opts">
+        <div class="opt correct">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="37" r="5" fill="#2A2F37"/><circle cx="30" cy="37" r="5" fill="#2A2F37"/><circle cx="44" cy="37" r="5" fill="#2A2F37"/><circle cx="58" cy="37" r="5" fill="#2A2F37"/></svg></div>
+          <div class="olt">A</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="23" cy="37" r="5" fill="#2A2F37"/><circle cx="37" cy="37" r="5" fill="#2A2F37"/><circle cx="51" cy="37" r="5" fill="#2A2F37"/></svg></div>
+          <div class="olt">B</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="37" r="5" fill="#2A2F37"/><circle cx="23" cy="37" r="5" fill="#2A2F37"/><circle cx="37" cy="37" r="5" fill="#2A2F37"/><circle cx="51" cy="37" r="5" fill="#2A2F37"/><circle cx="65" cy="37" r="5" fill="#2A2F37"/></svg></div>
+          <div class="olt">C</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="37" r="5" fill="#2A2F37"/><circle cx="44" cy="37" r="5" fill="#2A2F37"/></svg></div>
+          <div class="olt">D</div><div class="check">✓ correct</div>
+        </div></div>
+        <div class="expl"><b>Answer.</b> The number of dots increases by one each step: 1, 2, 3, then 4.</div>
+      </div>
+      <div class="q">
+        <div class="q-id">dgm-005</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="figrow"><svg viewBox="0 0 332 74" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><circle cx="37" cy="37" r="20" fill="#2A2F37"/></g><g transform="translate(86 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><circle cx="37" cy="37" r="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(172 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><circle cx="37" cy="37" r="20" fill="#2A2F37"/></g><g transform="translate(258 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><text x="37" y="47" text-anchor="middle" font-size="30" fill="#8A8F98" font-family="sans-serif">?</text></g></svg></div>
+        <div class="opts">
+        <div class="opt correct">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="37" cy="37" r="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">A</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="37" cy="37" r="20" fill="#2A2F37"/></svg></div>
+          <div class="olt">B</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="17" y="17" width="40" height="40" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">C</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="37" r="5" fill="#2A2F37"/><circle cx="44" cy="37" r="5" fill="#2A2F37"/></svg></div>
+          <div class="olt">D</div><div class="check">✓ correct</div>
+        </div></div>
+        <div class="expl"><b>Answer.</b> The circle alternates filled, empty, filled, so the next is empty.</div>
+      </div>
+      <div class="q">
+        <div class="q-id">dgm-006</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="figrow"><svg viewBox="0 0 332 74" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><rect x="27" y="27" width="20" height="20" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(86 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><rect x="21" y="21" width="32" height="32" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(172 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><rect x="15" y="15" width="44" height="44" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(258 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><text x="37" y="47" text-anchor="middle" font-size="30" fill="#8A8F98" font-family="sans-serif">?</text></g></svg></div>
+        <div class="opts">
+        <div class="opt correct">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="56" height="56" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">A</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="15" width="44" height="44" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">B</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="21" y="21" width="32" height="32" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">C</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><rect x="27" y="27" width="20" height="20" rx="3" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">D</div><div class="check">✓ correct</div>
+        </div></div>
+        <div class="expl"><b>Answer.</b> The square grows by the same amount each step, so the next is the largest square.</div>
+      </div>
+      <div class="q">
+        <div class="q-id">dgm-007</div>
+        <p class="stem">Which figure is the odd one out?</p>
+        
+        <div class="opts">
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="37" cy="37" r="18" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="34" r="4" fill="#2A2F37"/></svg></div>
+          <div class="olt">A</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="37" cy="37" r="18" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="44" cy="40" r="4" fill="#2A2F37"/></svg></div>
+          <div class="olt">B</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt correct">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="37" cy="37" r="18" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="37" cy="66" r="4" fill="#2A2F37"/></svg></div>
+          <div class="olt">C</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="37" cy="37" r="18" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="37" cy="30" r="4" fill="#2A2F37"/></svg></div>
+          <div class="olt">D</div><div class="check">✓ correct</div>
+        </div></div>
+        <div class="expl"><b>Answer.</b> In figures A, B and D the dot is inside the circle; in C the dot is outside it, so C is the odd one out.</div>
+      </div>
+      <div class="q">
+        <div class="q-id">dgm-008</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="figrow"><svg viewBox="0 0 332 74" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><polygon points="37.0,13.0 57.8,25.0 57.8,49.0 37.0,61.0 16.2,49.0 16.2,25.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(86 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><polygon points="37.0,13.0 59.8,29.6 51.1,56.4 22.9,56.4 14.2,29.6" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(172 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><polygon points="37.0,13.0 61.0,37.0 37.0,61.0 13.0,37.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(258 0)"><rect x="1" y="1" width="72" height="72" rx="6" fill="#fff" stroke="#E5E8EC" stroke-width="1"/><text x="37" y="47" text-anchor="middle" font-size="30" fill="#8A8F98" font-family="sans-serif">?</text></g></svg></div>
+        <div class="opts">
+        <div class="opt correct">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><polygon points="37.0,13.0 57.8,49.0 16.2,49.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">A</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><polygon points="37.0,13.0 61.0,37.0 37.0,61.0 13.0,37.0" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">B</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><polygon points="37.0,13.0 59.8,29.6 51.1,56.4 22.9,56.4 14.2,29.6" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">C</div><div class="check">✓ correct</div>
+        </div>
+        <div class="opt">
+          <div class="figbox"><svg viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><circle cx="37" cy="37" r="20" stroke="#2A2F37" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="olt">D</div><div class="check">✓ correct</div>
+        </div></div>
+        <div class="expl"><b>Answer.</b> Each shape has one fewer side than the last: 6, 5, 4, then 3 (a triangle).</div>
+      </div></main>
+</div>
+<script>
+  var m=document.getElementById('m'),c=document.getElementById('c'),r=document.getElementById('r');
+  function set(v){m.classList.toggle('reveal',v);r.classList.toggle('on',v);c.classList.toggle('on',!v);}
+  c.onclick=function(){set(false)};r.onclick=function(){set(true)};
+</script>
+</body></html>

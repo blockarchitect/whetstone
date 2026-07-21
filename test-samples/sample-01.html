@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whetstone — sample questions</title>
+<style>
+  :root{
+    --bg:#F7F8FA; --card:#FFFFFF; --ink:#1A1D23; --ink-2:#565A63; --ink-3:#8A8F98;
+    --line:#E5E8EC; --accent:#2751E0; --accent-soft:#EAF0FF;
+    --correct:#1B8A5A; --correct-bg:#E4F4EC; --correct-line:#B7E0CB;
+    --num:#2751E0; --ver:#B5540E; --log:#6A2CB5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+  header{padding:40px 0 24px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  h1{font-size:1.6rem;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--ink-2);font-size:.95rem;margin:0}
+  .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 0;
+    border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+  .toggle button{border:0;background:transparent;padding:8px 14px;font:inherit;font-size:.88rem;
+    cursor:pointer;color:var(--ink-2)}
+  .toggle button.on{background:var(--accent);color:#fff}
+  .bar .note{font-size:.82rem;color:var(--ink-3)}
+  section{margin-top:34px}
+  .sec-h{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  .sec-h h2{font-size:1.15rem;margin:0;letter-spacing:-.01em}
+  .tag{font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    padding:3px 8px;border-radius:20px;color:#fff}
+  .tag.num{background:var(--num)} .tag.ver{background:var(--ver)} .tag.log{background:var(--log)}
+  .sec-desc{color:var(--ink-2);font-size:.9rem;margin:2px 0 16px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:16px}
+  .q-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;color:var(--ink-3);margin-bottom:10px}
+  .stem{font-size:1.02rem;margin:0 0 16px;white-space:pre-line}
+  .opts{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .opt{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);border-radius:9px;
+    padding:11px 14px;font-size:.97rem}
+  .opt .lt{font-weight:600;color:var(--ink-2);min-width:18px}
+  .reveal .opt.correct{background:var(--correct-bg);border-color:var(--correct-line)}
+  .reveal .opt.correct .lt{color:var(--correct)}
+  .opt .check{margin-left:auto;color:var(--correct);font-weight:700;display:none}
+  .reveal .opt.correct .check{display:inline}
+  .expl{margin-top:14px;padding:13px 15px;background:var(--accent-soft);border-radius:9px;
+    font-size:.9rem;color:var(--ink-2);display:none}
+  .reveal .expl{display:block}
+  .expl b{color:var(--ink)}
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Sample questions</h1>
+    <p class="sub">A representative set from the Whetstone item pool — 4 numerical, 3 verbal, 4 logical. Original, auto-verifiable items.</p>
+  </header>
+
+  <div class="bar">
+    <div class="toggle" role="group" aria-label="View mode">
+      <button id="btn-candidate">Candidate view</button>
+      <button id="btn-review" class="on">Review view</button>
+    </div>
+    <span class="note">Candidate view = what a test-taker sees. Review view = answers + explanations revealed.</span>
+  </div>
+
+  <main id="content" class="reveal">
+
+    <!-- NUMERICAL -->
+    <section>
+      <div class="sec-h"><span class="tag num">Numerical</span><h2>Numerical reasoning</h2></div>
+      <p class="sec-desc">Data and arithmetic under time pressure — percentages, ratios, rates. One objectively correct answer.</p>
+
+      <div class="q">
+        <div class="q-id">num-001</div>
+        <p class="stem">A company's annual revenue was £2.4 million in 2022 and rose to £3.0 million in 2023. What was the percentage increase in revenue?</p>
+        <ul class="opts">
+          <li class="opt"><span class="lt">A</span><span>20%</span></li>
+          <li class="opt correct"><span class="lt">B</span><span>25%</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">C</span><span>30%</span></li>
+          <li class="opt"><span class="lt">D</span><span>60%</span></li>
+        </ul>
+        <div class="expl"><b>Why B.</b> The increase is £0.6m on a base of £2.4m. 0.6 / 2.4 = 0.25 = 25%. (30% divides by the new figure; 20% and 60% are common miscalculations.)</div>
+      </div>
+
+      <div class="q">
+        <div class="q-id">num-004</div>
+        <p class="stem">A product is priced at £80. The price is first increased by 15%, then the new price is reduced by 15%. What is the final price?</p>
+        <ul class="opts">
+          <li class="opt correct"><span class="lt">A</span><span>£78.20</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">B</span><span>£80.00</span></li>
+          <li class="opt"><span class="lt">C</span><span>£81.20</span></li>
+          <li class="opt"><span class="lt">D</span><span>£82.80</span></li>
+        </ul>
+        <div class="expl"><b>Why A.</b> 80 × 1.15 = 92, then 92 × 0.85 = 78.20. A percentage rise followed by the same percentage fall does not return to the original — it ends lower.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-id">num-010</div>
+        <p class="stem">8 workers build a wall in 6 days. Working at the same rate, how long would 12 workers take to build the same wall?</p>
+        <ul class="opts">
+          <li class="opt"><span class="lt">A</span><span>3 days</span></li>
+          <li class="opt correct"><span class="lt">B</span><span>4 days</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">C</span><span>5 days</span></li>
+          <li class="opt"><span class="lt">D</span><span>9 days</span></li>
+        </ul>
+        <div class="expl"><b>Why B.</b> The job is 8 × 6 = 48 worker-days. With 12 workers: 48 / 12 = 4 days.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-id">num-023</div>
+        <p class="stem">£120 is shared between A and B in the ratio 2 : 3. How much does B receive?</p>
+        <ul class="opts">
+          <li class="opt"><span class="lt">A</span><span>£48</span></li>
+          <li class="opt"><span class="lt">B</span><span>£60</span></li>
+          <li class="opt correct"><span class="lt">C</span><span>£72</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">D</span><span>£80</span></li>
+        </ul>
+        <div class="expl"><b>Why C.</b> There are 5 parts. 1 part = 120 / 5 = £24. B gets 3 parts = £72.</div>
+      </div>
+    </section>
+
+    <!-- VERBAL -->
+    <section>
+      <div class="sec-h"><span class="tag ver">Verbal</span><h2>Verbal reasoning</h2></div>
+      <p class="sec-desc">Read the passage, then judge the statement: True (follows from the passage), False (contradicts it), or Cannot Say (undetermined). The three sample answers below show one of each.</p>
+
+      <div class="q">
+        <div class="q-id">ver-001</div>
+        <p class="stem">Passage: The Riverside Café opened in 2015 and quickly became popular with local office workers. It serves breakfast and lunch, but closes at 3pm each day. All of its coffee beans are sourced from a single farm in Colombia.
+
+Statement: The Riverside Café serves dinner.</p>
+        <ul class="opts">
+          <li class="opt"><span class="lt">A</span><span>True</span></li>
+          <li class="opt correct"><span class="lt">B</span><span>False</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">C</span><span>Cannot Say</span></li>
+        </ul>
+        <div class="expl"><b>Why False.</b> The passage states the café serves breakfast and lunch and closes at 3pm. Dinner service is therefore contradicted by the passage.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-id">ver-003</div>
+        <p class="stem">Passage: TechCorp launched its flagship app in March. The company employs 300 people, half of whom work in software development. The remaining staff are split across sales, support, and administration.
+
+Statement: TechCorp employs 150 people in software development.</p>
+        <ul class="opts">
+          <li class="opt correct"><span class="lt">A</span><span>True</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">B</span><span>False</span></li>
+          <li class="opt"><span class="lt">C</span><span>Cannot Say</span></li>
+        </ul>
+        <div class="expl"><b>Why True.</b> Half of 300 is 150, and the passage states half work in software development — the statement follows directly.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-id">ver-008</div>
+        <p class="stem">Passage: The town of Ashford introduced a new recycling scheme in 2020. Within two years, the amount of waste sent to landfill had fallen by 40%. The scheme collects paper, glass and plastic, but not garden waste. Residents who do not sort their recycling correctly receive a written warning.
+
+Statement: Residents who repeatedly fail to sort their recycling are fined.</p>
+        <ul class="opts">
+          <li class="opt"><span class="lt">A</span><span>True</span></li>
+          <li class="opt"><span class="lt">B</span><span>False</span></li>
+          <li class="opt correct"><span class="lt">C</span><span>Cannot Say</span><span class="check">✓ correct</span></li>
+        </ul>
+        <div class="expl"><b>Why Cannot Say.</b> The passage mentions only a written warning; it says nothing about fines for repeat offenders, so this cannot be determined.</div>
+      </div>
+    </section>
+
+    <!-- LOGICAL -->
+    <section>
+      <div class="sec-h"><span class="tag log">Logical</span><h2>Logical reasoning</h2></div>
+      <p class="sec-desc">Sequences, codes, deduction, and odd-one-out — pattern recognition with a single correct answer.</p>
+
+      <div class="q">
+        <div class="q-id">log-001</div>
+        <p class="stem">What number continues the sequence?  2, 6, 12, 20, 30, ?</p>
+        <ul class="opts">
+          <li class="opt"><span class="lt">A</span><span>36</span></li>
+          <li class="opt"><span class="lt">B</span><span>40</span></li>
+          <li class="opt correct"><span class="lt">C</span><span>42</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">D</span><span>44</span></li>
+        </ul>
+        <div class="expl"><b>Why C.</b> The differences grow by 2 each step: +4, +6, +8, +10, so the next gap is +12. 30 + 12 = 42.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-id">log-003</div>
+        <p class="stem">All Bloops are Razzies. All Razzies are Lazzies. Which statement must be true?</p>
+        <ul class="opts">
+          <li class="opt correct"><span class="lt">A</span><span>All Bloops are Lazzies</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">B</span><span>All Lazzies are Bloops</span></li>
+          <li class="opt"><span class="lt">C</span><span>Some Lazzies are not Bloops</span></li>
+          <li class="opt"><span class="lt">D</span><span>No Bloops are Lazzies</span></li>
+        </ul>
+        <div class="expl"><b>Why A.</b> Bloops ⊆ Razzies ⊆ Lazzies, so every Bloop is a Lazzie. The other options make claims the premises do not guarantee.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-id">log-009</div>
+        <p class="stem">In a code, each letter is replaced by its position in the alphabet (A = 1, B = 2, and so on). If CAT is written as 3-1-20, how is DOG written?</p>
+        <ul class="opts">
+          <li class="opt correct"><span class="lt">A</span><span>4-15-7</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">B</span><span>4-14-7</span></li>
+          <li class="opt"><span class="lt">C</span><span>3-15-7</span></li>
+          <li class="opt"><span class="lt">D</span><span>4-15-8</span></li>
+        </ul>
+        <div class="expl"><b>Why A.</b> D is the 4th letter, O the 15th, G the 7th, giving 4-15-7.</div>
+      </div>
+
+      <div class="q">
+        <div class="q-id">log-016</div>
+        <p class="stem">Which is the odd one out?  Triangle, Square, Circle, Pentagon</p>
+        <ul class="opts">
+          <li class="opt"><span class="lt">A</span><span>Triangle</span></li>
+          <li class="opt"><span class="lt">B</span><span>Square</span></li>
+          <li class="opt correct"><span class="lt">C</span><span>Circle</span><span class="check">✓ correct</span></li>
+          <li class="opt"><span class="lt">D</span><span>Pentagon</span></li>
+        </ul>
+        <div class="expl"><b>Why C.</b> A triangle, square and pentagon are all made of straight sides and corners; a circle has neither.</div>
+      </div>
+    </section>
+
+    <footer>
+      Whetstone sample set · questions are original, style-based practice items — not affiliated with or endorsed by any test publisher or employer. Answers and explanations shown in review view.
+    </footer>
+  </main>
+</div>
+
+<script>
+  var content = document.getElementById('content');
+  var bC = document.getElementById('btn-candidate');
+  var bR = document.getElementById('btn-review');
+  function set(review){
+    content.classList.toggle('reveal', review);
+    bR.classList.toggle('on', review);
+    bC.classList.toggle('on', !review);
+  }
+  bC.addEventListener('click', function(){ set(false); });
+  bR.addEventListener('click', function(){ set(true); });
+</script>
+</body>
+</html>

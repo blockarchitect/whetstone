@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whetstone — diagrammatic reasoning sample</title>
+<style>
+  :root{
+    --bg:#F7F8FA; --card:#FFFFFF; --ink:#1A1D23; --ink-2:#565A63; --ink-3:#8A8F98;
+    --line:#E5E8EC; --accent:#2751E0; --accent-soft:#EAF0FF;
+    --correct:#1B8A5A; --correct-bg:#E4F4EC; --correct-line:#B7E0CB;
+    --abr:#0E7C86;
+    --fig:#2A2F37;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+  header{padding:40px 0 22px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  h1{font-size:1.6rem;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--ink-2);font-size:.95rem;margin:0}
+  .banner{background:#FFF6E5;border:1px solid #F0DBA8;border-radius:10px;padding:14px 16px;
+    font-size:.9rem;color:#6B4E13;margin:18px 0 4px}
+  .banner b{color:#553d0c}
+  .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 0;
+    border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+  .toggle button{border:0;background:transparent;padding:8px 14px;font:inherit;font-size:.88rem;cursor:pointer;color:var(--ink-2)}
+  .toggle button.on{background:var(--accent);color:#fff}
+  .bar .note{font-size:.82rem;color:var(--ink-3)}
+  section{margin-top:30px}
+  .sec-h{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  .sec-h h2{font-size:1.15rem;margin:0;letter-spacing:-.01em}
+  .tag{font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:20px;color:#fff;background:var(--abr)}
+  .sec-desc{color:var(--ink-2);font-size:.9rem;margin:2px 0 16px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:16px}
+  .q-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;color:var(--ink-3);margin-bottom:10px}
+  .stem{font-size:1.02rem;margin:0 0 16px}
+  .seq{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .fig{width:74px;height:74px;border:1px solid var(--line);border-radius:8px;background:#fff;display:block}
+  .fig.qmark{display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--ink-3);font-weight:600;background:#FafBfc}
+  .arrow-sep{color:var(--ink-3);font-size:1.1rem}
+  .lbl{font-size:.78rem;color:var(--ink-3);text-align:center;margin-top:4px}
+  .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:420px}
+  .opt{border:1px solid var(--line);border-radius:9px;padding:10px 8px 8px;text-align:center}
+  .opt .olt{font-weight:600;color:var(--ink-2);font-size:.85rem}
+  .reveal .opt.correct{background:var(--correct-bg);border-color:var(--correct-line)}
+  .reveal .opt.correct .olt{color:var(--correct)}
+  .opt .check{display:none;color:var(--correct);font-weight:700;font-size:.75rem;margin-top:3px}
+  .reveal .opt.correct .check{display:block}
+  .expl{margin-top:16px;padding:13px 15px;background:var(--accent-soft);border-radius:9px;font-size:.9rem;color:var(--ink-2);display:none}
+  .reveal .expl{display:block}
+  .expl b{color:var(--ink)}
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:.8rem}
+  svg .stroke{stroke:var(--fig);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  svg .dot{fill:var(--fig)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Diagrammatic / abstract reasoning — sample</h1>
+    <p class="sub">The visual construct family the current pool doesn't yet cover. Two rule-based figure questions, drawn as SVG.</p>
+  </header>
+
+  <div class="banner">
+    <b>Not in the MVP pool yet.</b> These are a demonstration of what diagrammatic/abstract reasoning items would look like.
+    They're a distinct construct (shape sequences, matrices, rule-based transformations) — well suited to the later
+    deterministic generator, since the figures are produced from a rule. Shown here so you can decide whether to add
+    a small hand-authored set to the launch, or treat it as a fast-follow.
+  </div>
+
+  <div class="bar">
+    <div class="toggle" role="group" aria-label="View mode">
+      <button id="btn-candidate">Candidate view</button>
+      <button id="btn-review" class="on">Review view</button>
+    </div>
+    <span class="note">Toggle answers + explanations.</span>
+  </div>
+
+  <main id="content" class="reveal">
+    <section>
+      <div class="sec-h"><span class="tag">Diagrammatic</span><h2>Abstract reasoning</h2></div>
+      <p class="sec-desc">Infer the rule governing a sequence of figures, then pick the figure that comes next. No numbers or words — pure pattern.</p>
+
+      <!-- abr-001: arrow rotating 90 CW -->
+      <div class="q">
+        <div class="q-id">abr-001</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="seq">
+          <div>
+            <svg class="fig" viewBox="0 0 74 74"><g transform="rotate(0 37 37)"><line class="stroke" x1="37" y1="54" x2="37" y2="20"/><polyline class="stroke" points="28,29 37,20 46,29"/></g></svg>
+          </div>
+          <span class="arrow-sep">→</span>
+          <div>
+            <svg class="fig" viewBox="0 0 74 74"><g transform="rotate(90 37 37)"><line class="stroke" x1="37" y1="54" x2="37" y2="20"/><polyline class="stroke" points="28,29 37,20 46,29"/></g></svg>
+          </div>
+          <span class="arrow-sep">→</span>
+          <div>
+            <svg class="fig" viewBox="0 0 74 74"><g transform="rotate(180 37 37)"><line class="stroke" x1="37" y1="54" x2="37" y2="20"/><polyline class="stroke" points="28,29 37,20 46,29"/></g></svg>
+          </div>
+          <span class="arrow-sep">→</span>
+          <div>
+            <div class="fig qmark">?</div>
+          </div>
+        </div>
+        <div class="opts">
+          <div class="opt">
+            <svg class="fig" viewBox="0 0 74 74"><g transform="rotate(0 37 37)"><line class="stroke" x1="37" y1="54" x2="37" y2="20"/><polyline class="stroke" points="28,29 37,20 46,29"/></g></svg>
+            <div class="olt">A</div><div class="check">✓</div>
+          </div>
+          <div class="opt">
+            <svg class="fig" viewBox="0 0 74 74"><g transform="rotate(90 37 37)"><line class="stroke" x1="37" y1="54" x2="37" y2="20"/><polyline class="stroke" points="28,29 37,20 46,29"/></g></svg>
+            <div class="olt">B</div><div class="check">✓</div>
+          </div>
+          <div class="opt">
+            <svg class="fig" viewBox="0 0 74 74"><g transform="rotate(180 37 37)"><line class="stroke" x1="37" y1="54" x2="37" y2="20"/><polyline class="stroke" points="28,29 37,20 46,29"/></g></svg>
+            <div class="olt">C</div><div class="check">✓</div>
+          </div>
+          <div class="opt correct">
+            <svg class="fig" viewBox="0 0 74 74"><g transform="rotate(270 37 37)"><line class="stroke" x1="37" y1="54" x2="37" y2="20"/><polyline class="stroke" points="28,29 37,20 46,29"/></g></svg>
+            <div class="olt">D</div><div class="check">✓ correct</div>
+          </div>
+        </div>
+        <div class="expl"><b>Why D.</b> The arrow rotates 90° clockwise at each step: up → right → down → left. The next figure is the arrow pointing left.</div>
+      </div>
+
+      <!-- abr-002: dot moving clockwise around corners -->
+      <div class="q">
+        <div class="q-id">abr-002</div>
+        <p class="stem">Which figure completes the sequence?</p>
+        <div class="seq">
+          <div>
+            <svg class="fig" viewBox="0 0 74 74"><rect class="stroke" x="16" y="16" width="42" height="42" rx="3"/><circle class="dot" cx="16" cy="16" r="6"/></svg>
+          </div>
+          <span class="arrow-sep">→</span>
+          <div>
+            <svg class="fig" viewBox="0 0 74 74"><rect class="stroke" x="16" y="16" width="42" height="42" rx="3"/><circle class="dot" cx="58" cy="16" r="6"/></svg>
+          </div>
+          <span class="arrow-sep">→</span>
+          <div>
+            <svg class="fig" viewBox="0 0 74 74"><rect class="stroke" x="16" y="16" width="42" height="42" rx="3"/><circle class="dot" cx="58" cy="58" r="6"/></svg>
+          </div>
+          <span class="arrow-sep">→</span>
+          <div>
+            <div class="fig qmark">?</div>
+          </div>
+        </div>
+        <div class="opts">
+          <div class="opt correct">
+            <svg class="fig" viewBox="0 0 74 74"><rect class="stroke" x="16" y="16" width="42" height="42" rx="3"/><circle class="dot" cx="16" cy="58" r="6"/></svg>
+            <div class="olt">A</div><div class="check">✓ correct</div>
+          </div>
+          <div class="opt">
+            <svg class="fig" viewBox="0 0 74 74"><rect class="stroke" x="16" y="16" width="42" height="42" rx="3"/><circle class="dot" cx="16" cy="16" r="6"/></svg>
+            <div class="olt">B</div><div class="check">✓</div>
+          </div>
+          <div class="opt">
+            <svg class="fig" viewBox="0 0 74 74"><rect class="stroke" x="16" y="16" width="42" height="42" rx="3"/><circle class="dot" cx="58" cy="16" r="6"/></svg>
+            <div class="olt">C</div><div class="check">✓</div>
+          </div>
+          <div class="opt">
+            <svg class="fig" viewBox="0 0 74 74"><rect class="stroke" x="16" y="16" width="42" height="42" rx="3"/><circle class="dot" cx="37" cy="37" r="6"/></svg>
+            <div class="olt">D</div><div class="check">✓</div>
+          </div>
+        </div>
+        <div class="expl"><b>Why A.</b> The dot moves one corner clockwise each step: top-left → top-right → bottom-right → bottom-left. The next figure has the dot in the bottom-left corner.</div>
+      </div>
+    </section>
+
+    <footer>
+      Whetstone diagrammatic sample · original, rule-based figures · not affiliated with or endorsed by any test publisher.
+    </footer>
+  </main>
+</div>
+
+<script>
+  var content = document.getElementById('content');
+  var bC = document.getElementById('btn-candidate');
+  var bR = document.getElementById('btn-review');
+  function set(review){
+    content.classList.toggle('reveal', review);
+    bR.classList.toggle('on', review);
+    bC.classList.toggle('on', !review);
+  }
+  bC.addEventListener('click', function(){ set(false); });
+  bR.addEventListener('click', function(){ set(true); });
+</script>
+</body>
+</html>

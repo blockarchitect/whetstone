@@ -1,5 +1,5 @@
 {
-  "id": "955acb40-9d6d-40d3-9639-7511090580c8",
+  "id": "626157c7-8536-421f-960c-a07ca904abb3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -106,6 +106,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "figure_svg": {
+          "name": "figure_svg",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "options": {
           "name": "options",
@@ -465,7 +471,8 @@
       "values": [
         "numerical",
         "verbal",
-        "logical"
+        "logical",
+        "diagrammatic"
       ]
     },
     "public.delivery_mode": {

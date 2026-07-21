@@ -39,6 +39,9 @@ skins:
       - { itemId: log-003 }
       - { itemId: log-011 }
       - { itemId: log-023 }
+      - { itemId: dgm-001 }
+      - { itemId: dgm-003 }
+      - { itemId: dgm-005 }
 
   - slug: ccat-practice-test
     displayName: "CCAT Practice Test"
@@ -68,6 +71,9 @@ skins:
       - { itemId: log-013 }
       - { itemId: log-017 }
       - { itemId: log-022 }
+      - { itemId: dgm-002 }
+      - { itemId: dgm-004 }
+      - { itemId: dgm-008 }
 
   - slug: watson-glaser-practice-test
     displayName: "Watson Glaser-Style Critical Thinking Practice Test"
@@ -120,6 +126,8 @@ skins:
       - { itemId: log-008 }
       - { itemId: log-015 }
       - { itemId: log-019 }
+      - { itemId: dgm-006 }
+      - { itemId: dgm-007 }
 
   - slug: plural-strategy-numerical-test
     displayName: "Plural Strategy-Style Numerical Reasoning Test"
@@ -169,6 +177,8 @@ skins:
       - { itemId: log-010 }
       - { itemId: log-018 }
       - { itemId: log-021 }
+      - { itemId: dgm-001 }
+      - { itemId: dgm-002 }
 
   - slug: deloitte-assessment-practice
     displayName: "Deloitte Assessment Practice Test"
