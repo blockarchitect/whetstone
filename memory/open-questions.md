@@ -14,7 +14,8 @@
 1. **Escape route / LTV ceiling (D5).** [resolved-in-direction → D13] Not "B2B as one option"
    — B2B-as-trusted-assessor is the actual destination (D13). Monetization mechanics still
    ~6 months out / parked; free until traction. Revisit sequencing once there's an audience.
-2. **Start market — UK vs India (D4).** [leaning: UK, pending DataForSEO volumes to confirm]
+2. **Start market — UK vs India (D4).** [resolved for MVP → UK, D26, 2026-07-21; DataForSEO
+   confirmation still valuable for later multi-market expansion]
    Highest-intent (UK) vs highest-volume/price-sensitive (India). Decide where density is
    winnable first. **Preliminary evidence, 2026-07-20 (live Google Trends pull, `tools/
    aptitude-market-research`):** India's raw "aptitude test" interest looks highest (63.2 vs

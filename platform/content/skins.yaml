@@ -1,0 +1,320 @@
+# ============================================================
+#  Whetstone test profiles (skins) — 12 UK launch tests
+#  Each skin is a CONFIG over the shared item pool (content/items.yaml),
+#  not its own question set. A new "test" = a new entry here (D3/D26).
+#
+#  disclaimer is REQUIRED on every named skin (D26 legal requirement) —
+#  the seed script rejects any skin whose disclaimer is missing or trivially short.
+#  Every disclaimer states we are NOT affiliated with the named test/company.
+#
+#  Item mixes vary by what each real assessment emphasises (e.g. Watson Glaser
+#  is critical-reasoning heavy, Plural Strategy is numerical), all drawing from
+#  the same 75-item pool — which is the whole point of the shared-pool design.
+# ============================================================
+
+skins:
+  # ---------------- PUBLISHER-STYLE ----------------
+  - slug: shl-style-aptitude-test
+    displayName: "SHL-Style Aptitude Practice Test"
+    tier: publisher
+    companyOrPublisherName: "SHL"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to SHL. All questions are original and are designed to
+      resemble the general style of the assessment, not to reproduce it.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free SHL-style aptitude practice test with numerical, verbal and logical
+      reasoning questions and full worked answers.
+    items:
+      - { itemId: num-001 }
+      - { itemId: num-004 }
+      - { itemId: num-011 }
+      - { itemId: num-017 }
+      - { itemId: ver-001 }
+      - { itemId: ver-003 }
+      - { itemId: ver-009 }
+      - { itemId: ver-021 }
+      - { itemId: log-001 }
+      - { itemId: log-003 }
+      - { itemId: log-011 }
+      - { itemId: log-023 }
+
+  - slug: ccat-practice-test
+    displayName: "CCAT Practice Test"
+    tier: publisher
+    companyOrPublisherName: "Criteria Cognitive Aptitude Test (CCAT)"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to Criteria Corp or the CCAT. All questions are original
+      and designed to resemble the general style of the assessment.
+    timeLimitMinutes: 15
+    seoDescription: >-
+      Free CCAT practice test covering numerical, verbal and logical reasoning,
+      with instant scoring and explanations.
+    items:
+      - { itemId: num-002 }
+      - { itemId: num-005 }
+      - { itemId: num-008 }
+      - { itemId: num-013 }
+      - { itemId: num-020 }
+      - { itemId: ver-002 }
+      - { itemId: ver-006 }
+      - { itemId: ver-010 }
+      - { itemId: ver-015 }
+      - { itemId: ver-024 }
+      - { itemId: log-002 }
+      - { itemId: log-006 }
+      - { itemId: log-013 }
+      - { itemId: log-017 }
+      - { itemId: log-022 }
+
+  - slug: watson-glaser-practice-test
+    displayName: "Watson Glaser-Style Critical Thinking Practice Test"
+    tier: publisher
+    companyOrPublisherName: "Watson Glaser"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to the publisher of the Watson Glaser test. All questions
+      are original and designed to resemble the general style of the assessment.
+    timeLimitMinutes: 15
+    seoDescription: >-
+      Free Watson Glaser-style critical thinking practice test focused on verbal
+      reasoning and logical deduction, with explained answers.
+    items:
+      - { itemId: num-007 }
+      - { itemId: ver-004 }
+      - { itemId: ver-007 }
+      - { itemId: ver-011 }
+      - { itemId: ver-018 }
+      - { itemId: ver-020 }
+      - { itemId: ver-023 }
+      - { itemId: log-003 }
+      - { itemId: log-011 }
+      - { itemId: log-014 }
+      - { itemId: log-020 }
+      - { itemId: log-025 }
+
+  - slug: korn-ferry-practice-test
+    displayName: "Korn Ferry-Style Assessment Practice Test"
+    tier: publisher
+    companyOrPublisherName: "Korn Ferry"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to Korn Ferry or Talent Q. All questions are original and
+      designed to resemble the general style of the assessment.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free Korn Ferry-style assessment practice with numerical, verbal and
+      logical reasoning questions and full explanations.
+    items:
+      - { itemId: num-003 }
+      - { itemId: num-009 }
+      - { itemId: num-014 }
+      - { itemId: num-022 }
+      - { itemId: ver-005 }
+      - { itemId: ver-008 }
+      - { itemId: ver-016 }
+      - { itemId: ver-022 }
+      - { itemId: log-004 }
+      - { itemId: log-008 }
+      - { itemId: log-015 }
+      - { itemId: log-019 }
+
+  - slug: plural-strategy-numerical-test
+    displayName: "Plural Strategy-Style Numerical Reasoning Test"
+    tier: publisher
+    companyOrPublisherName: "Plural Strategy"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to Plural Strategy. All questions are original and
+      designed to resemble the general style of a numerical reasoning assessment.
+    timeLimitMinutes: 18
+    seoDescription: >-
+      Free numerical reasoning practice test in the style used by boutique
+      consulting firms, with data-driven questions and worked solutions.
+    items:
+      - { itemId: num-001 }
+      - { itemId: num-006 }
+      - { itemId: num-010 }
+      - { itemId: num-012 }
+      - { itemId: num-015 }
+      - { itemId: num-018 }
+      - { itemId: num-021 }
+      - { itemId: num-023 }
+      - { itemId: num-024 }
+      - { itemId: num-025 }
+
+  # ---------------- NAMED-EMPLOYER ----------------
+  - slug: amazon-online-assessment-practice
+    displayName: "Amazon Online Assessment Practice Test"
+    tier: employer
+    companyOrPublisherName: "Amazon"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to Amazon. All questions are original and designed to
+      resemble the general style of graduate aptitude assessments.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free practice for the Amazon online assessment, covering numerical and
+      logical reasoning with instant scoring and explanations.
+    items:
+      - { itemId: num-002 }
+      - { itemId: num-011 }
+      - { itemId: num-016 }
+      - { itemId: num-019 }
+      - { itemId: num-020 }
+      - { itemId: log-001 }
+      - { itemId: log-005 }
+      - { itemId: log-010 }
+      - { itemId: log-018 }
+      - { itemId: log-021 }
+
+  - slug: deloitte-assessment-practice
+    displayName: "Deloitte Assessment Practice Test"
+    tier: employer
+    companyOrPublisherName: "Deloitte"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to Deloitte. All questions are original and designed to
+      resemble the general style of graduate aptitude assessments.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free Deloitte assessment practice test with numerical, verbal and logical
+      reasoning questions and explained answers.
+    items:
+      - { itemId: num-004 }
+      - { itemId: num-013 }
+      - { itemId: num-017 }
+      - { itemId: num-024 }
+      - { itemId: ver-003 }
+      - { itemId: ver-010 }
+      - { itemId: ver-014 }
+      - { itemId: ver-017 }
+      - { itemId: log-006 }
+      - { itemId: log-012 }
+      - { itemId: log-024 }
+
+  - slug: pwc-assessment-practice
+    displayName: "PwC Assessment Practice Test"
+    tier: employer
+    companyOrPublisherName: "PwC"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to PwC. All questions are original and designed to
+      resemble the general style of graduate aptitude assessments.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free PwC assessment practice test covering numerical, verbal and logical
+      reasoning, with instant results and worked answers.
+    items:
+      - { itemId: num-005 }
+      - { itemId: num-008 }
+      - { itemId: num-021 }
+      - { itemId: num-022 }
+      - { itemId: ver-001 }
+      - { itemId: ver-009 }
+      - { itemId: ver-019 }
+      - { itemId: ver-021 }
+      - { itemId: log-002 }
+      - { itemId: log-009 }
+      - { itemId: log-016 }
+      - { itemId: log-020 }
+
+  - slug: kpmg-aptitude-test-practice
+    displayName: "KPMG Aptitude Test Practice"
+    tier: employer
+    companyOrPublisherName: "KPMG"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to KPMG. All questions are original and designed to
+      resemble the general style of graduate aptitude assessments.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free KPMG aptitude test practice with numerical and verbal reasoning
+      questions and full explanations.
+    items:
+      - { itemId: num-003 }
+      - { itemId: num-007 }
+      - { itemId: num-012 }
+      - { itemId: num-018 }
+      - { itemId: num-025 }
+      - { itemId: ver-002 }
+      - { itemId: ver-007 }
+      - { itemId: ver-013 }
+      - { itemId: ver-015 }
+      - { itemId: ver-020 }
+
+  - slug: civil-service-test-practice
+    displayName: "Civil Service Test Practice"
+    tier: employer
+    companyOrPublisherName: "the UK Civil Service"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to the UK Civil Service or Cabinet Office. All questions
+      are original and designed to resemble the general style of aptitude tests.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free Civil Service test practice covering numerical and verbal reasoning,
+      with instant scoring and explained answers.
+    items:
+      - { itemId: num-006 }
+      - { itemId: num-009 }
+      - { itemId: num-014 }
+      - { itemId: num-020 }
+      - { itemId: num-023 }
+      - { itemId: ver-004 }
+      - { itemId: ver-006 }
+      - { itemId: ver-011 }
+      - { itemId: ver-018 }
+      - { itemId: ver-024 }
+
+  - slug: capgemini-aptitude-test-practice
+    displayName: "Capgemini Aptitude Test Practice"
+    tier: employer
+    companyOrPublisherName: "Capgemini"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to Capgemini. All questions are original and designed to
+      resemble the general style of graduate aptitude assessments.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free Capgemini aptitude test practice with numerical and logical reasoning
+      questions and worked solutions.
+    items:
+      - { itemId: num-001 }
+      - { itemId: num-010 }
+      - { itemId: num-015 }
+      - { itemId: num-019 }
+      - { itemId: num-022 }
+      - { itemId: log-003 }
+      - { itemId: log-007 }
+      - { itemId: log-013 }
+      - { itemId: log-017 }
+      - { itemId: log-022 }
+
+  - slug: barclays-assessment-practice
+    displayName: "Barclays Assessment Practice Test"
+    tier: employer
+    companyOrPublisherName: "Barclays"
+    disclaimer: >-
+      This is an independent practice test. It is not affiliated with, endorsed
+      by, or connected to Barclays. All questions are original and designed to
+      resemble the general style of graduate aptitude assessments.
+    timeLimitMinutes: 12
+    seoDescription: >-
+      Free Barclays assessment practice test with numerical, verbal and logical
+      reasoning questions and instant, explained results.
+    items:
+      - { itemId: num-002 }
+      - { itemId: num-011 }
+      - { itemId: num-016 }
+      - { itemId: num-024 }
+      - { itemId: ver-005 }
+      - { itemId: ver-012 }
+      - { itemId: ver-016 }
+      - { itemId: ver-022 }
+      - { itemId: log-004 }
+      - { itemId: log-011 }
+      - { itemId: log-015 }
+      - { itemId: log-023 }

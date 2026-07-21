@@ -965,6 +965,46 @@ typed API calls (or a fan-out event queue), not one shared table both read from.
 
 ---
 
+## D26 — MVP scope: ship a static, hand-seeded UK launch before any engine automation
+**Decided.** Go live fast with 10–15 non-adaptive tests for a single market (**UK**,
+confirmed 2026-07-21 — leaning on the D4 Trends-relevance evidence: ~78% on-thesis
+signal vs. India's ~5%), skipping every automated/generative piece until the wedge is
+proven. **Build like the architecture, skip the automation.**
+
+**The one structural discipline kept even in a stripped MVP:** a shared **item pool** +
+separate **skin configs** (D3's shape), not 10–15 independently hardcoded tests. One
+pool of ~60–90 hand/AI-authored, human-validated items across numerical/verbal/logical
+reasoning; each "test" is a config (item subset, count, time limit, company/publisher
+name) drawing from that same pool. Costs nothing extra now; it's the exact seam a real
+generative Content Engine slots into later without a rewrite.
+
+**In scope:** one monolithic Next.js app (no D23 three-way split — not justified until
+there's real automation to separate); one non-adaptive delivery mode (linear, fixed or
+timed sections — D10's simplest tier); one generic UI (no D16 per-target shells); basic
+score + per-construct breakdown (not D17's full insight engine); 10–15 hand-picked
+landing pages with on-page SEO + schema.org (not D9's automated opportunity loop);
+lightweight anonymous identity + basic completion tracking (cheap, preserves the data
+option — kept even though the rest of D12's spine waits).
+
+**Deferred entirely:** D3's generative construct engine, D2's live calibration loop,
+D10's adaptive/testlet strategies, D11/D24's automated Test Intelligence and vendor/
+geography mapping, D14's item-bank evolution, D17's full reporting, D18's daily
+micro-content, D19's LinkedIn work, D20's credential signing, D21's gamification, D23's
+service split.
+
+**Non-negotiable regardless of scope (existing hard constraints, not new):** every
+company/publisher-named page carries the affiliation disclaimer from day one; items are
+generated from public format knowledge only, never copied content.
+
+**Targets (UK, mixing publisher-style + named-employer pages):** SHL-style, CCAT,
+Watson Glaser, Korn Ferry-style, Plural Strategy-style (publisher tier) + Amazon,
+Deloitte, PwC, KPMG, Civil Service, Capgemini, Barclays (named-employer tier) — drawn
+from `keywords.yaml`'s existing seed list, not new guesses.
+
+**Status:** committed direction; detailed build sequencing → see the active build plan.
+
+---
+
 ## Reference — where things live now
 This file is the **historical reasoning log** (why we decided X, what we rejected) — it
 stays append-only and chronological. Two other places hold the material that used to

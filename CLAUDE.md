@@ -46,8 +46,12 @@ a bad idea, don't cheerlead.
   vertical deep-dive (HTML).
 - `tools/aptitude-market-research/` — the API-first research kit (run in Claude Code;
   see its README). Pulls keywords, demand, competitor traffic, funding/graveyard, VoC.
-- `memory/decisions.md` — the decision record (D1–D23+). The historical *why*.
+- `memory/decisions.md` — the decision record (D1–D26+). The historical *why*.
 - `memory/open-questions.md` — the living brainstorm log: everything still open, grouped by area.
+- `plans/` — working/task plans (project-local, not the shared `~/.claude/plans/` —
+  see `plans/README.md`). `active.md` is what's in flight right now (currently: the MVP build).
+- `platform/` — the MVP application (Next.js/Drizzle/Neon), once scaffolded. See `plans/active.md`.
+- `.claude/settings.json` — committed harness config (`plansDirectory` points at `./plans`).
 
 ## How to work here
 - Prefer complete, copy-paste-ready scripts (heredoc blocks) over fragments; env is
