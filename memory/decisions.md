@@ -1031,9 +1031,14 @@ when reviewing samples.
 engine" work), produce, in order:
 1. **Question-types / coverage catalogue** — done: `docs/question-types.md` (full type list,
    MVP-marked; the coverage roadmap).
-2. **Requirements spec** — functional + non-functional requirements for the product (not yet
-   written).
-3. **Architecture / design doc** — the system design for the app (not yet written).
+2. **Requirements spec** — done: `docs/06-requirements.md` (2026-07-21). Full-scope,
+   horizon-tagged (MVP/Post-MVP/North-star), acceptance criteria on MVP items, traceability
+   to D#s. Scope call: cover the whole product but tag by horizon with depth proportional to
+   horizon (near-term testable, far-term intent-only) — so nothing's forgotten without
+   over-specifying what will change. §10 logs two small spec-vs-build gaps (no `domain` field
+   yet; instrument-now hooks deferred) as *conscious* deferrals — the D27 failure mode made explicit.
+3. **Architecture / design doc** — the system design for the app (not yet written; next, after
+   the requirements spec is reviewed/ratified).
 
 **What is NOT wasted:** the Phase 1–2 build (schema + 83 validated items + 12 skins + seed
 script) is a real asset under any plan, and building it cheaply *proved* the shared-pool

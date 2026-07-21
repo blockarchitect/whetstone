@@ -118,6 +118,26 @@
     assessment AI, plus US EEOC Uniform Guidelines adverse-impact analysis and UK Equality
     Act, once we're a qualifying instrument (not "just" practice)? When do we need to engage
     counsel + a psychometrician — before or after the first employer conversation?
+27b. **Open/public-domain item banks — usable, and how?** [leaning: reference-only, not
+    source content] Researched 2026-07-21. **ICAR** (International Cognitive Ability
+    Resource) is the one construct-relevant open bank — ~1,000 items in matrix reasoning,
+    letter/number series, verbal reasoning, 3D spatial — but it's public-domain **for
+    non-commercial research**, so copying items into a commercial shipped pool is a real
+    license question, not a clean yes. **IPIP** (personality) is genuinely public-domain
+    *and* commercial-safe, but out of scope per D3 (personality isn't practiceable).
+    **The trap:** popular "open" NLP reasoning datasets (ReClor, LogiQA, AR-LSAT) are
+    packaged with permissive-looking licenses but are actually *derived from copyrighted
+    standardized tests* (GMAT/LSAT/Chinese Civil Service) — using them would violate this
+    project's own D2 "no dumps" rule despite looking like clean open data. **Leaning
+    direction:** use ICAR + open item-generation methodologies (its published construction
+    rules, figural-analogy/matrix generator approaches) as license-clean *reference
+    material* for building Whetstone's own deterministic generators (FR-G,
+    `docs/06-requirements.md`) — not as items to copy. **Still open:** confirm ICAR's exact
+    commercial-use terms with a direct license read (not just secondary sources) before
+    leaning on it even as a generator reference; check whether any UK Civil Service practice
+    material (one of the 12 MVP skins) is Open Government Licence and reusable with
+    attribution. Ties to Q25 (the structure-not-content line) — same bright line, applied to
+    a new source type.
 
 ## H. North star — becoming the trusted qualifying assessment (D13)
 28. **Which employer(s) first, and how do we get the first "yes"?** [open] The two-sided
