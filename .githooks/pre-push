@@ -1,44 +1,57 @@
 #!/bin/sh
-# claude-hook-version: 2   (managed by ~/.claude/bin/claude-init — edit there, not here)
-# Pre-push guard — the multi-account gotcha. The gh CLI silently flips between logins, and pushing as
-# the wrong account fails with "Repository not found", which reads like a missing or renamed repo and
-# sends you hunting the wrong problem. (It has fired for real three times in one week.)
+# claude-hook-version: 3   (managed by ~/.claude/bin/claude-init — edit there, not here)
+# Pre-push guard — the multi-account gotcha. Pushing with the wrong credential fails as
+# "Repository not found", which reads like a missing or renamed repo and sends you hunting the wrong
+# problem entirely. It has fired for real four times in one week.
 #
-# It asks the question that actually matters — "can the ACTIVE account push to this repo?" — rather
-# than comparing the origin owner to the login name. Those differ legitimately: an ORG-owned repo has
-# the org as its owner, so a name comparison blocks every org push. Permission is the truth.
+# It probes the ACTUAL push path with `git ls-remote` — an authenticated round-trip through git's own
+# credential helper, the same mechanism the push will use. Earlier versions asked the `gh` CLI instead,
+# and that is a DIFFERENT credential store: gh reported the right account with push rights while git's
+# osxkeychain entry still held a stale token, so the guard passed and the push 404'd. Ask the mechanism
+# that will do the work, not one that merely looks similar.
 #
-# Fails OPEN on anything ambiguous (offline, no gh, rate-limited, non-GitHub remote): a guard that
-# blocks work when the network hiccups gets disabled, and then it guards nothing.
-# Installed by claude-init and committed with the repo. Emergency bypass: `git push --no-verify`.
+# Fails OPEN on anything ambiguous (offline, no remote): a guard that blocks work when the network
+# hiccups gets disabled, and then it guards nothing. Emergency bypass: `git push --no-verify`.
 set -e
 
-remote_url=$(git remote get-url origin 2>/dev/null || echo "")
-case "$remote_url" in
-  *github.com*) ;;
-  *) exit 0 ;;                              # not a GitHub remote — nothing to guard
+git remote get-url origin >/dev/null 2>&1 || exit 0   # no origin — nothing to guard
+
+# Test 1 (the real one): can we authenticate to this remote right now, via git's own credential path?
+if git ls-remote --quiet origin HEAD >/dev/null 2>&1; then
+  # Test 2: reachable is not the same as writable — a PUBLIC repo answers ls-remote to anyone. If gh
+  # is present and says explicitly that this account has no push right, stop; anything ambiguous passes.
+  if command -v gh >/dev/null 2>&1; then
+    slug=$(git remote get-url origin | sed -E -e 's#^.*github\.com[:/]+##' -e 's#\.git$##' -e 's#/$##')
+    if [ "$(gh api "/repos/$slug" --jq '.permissions.push' 2>/dev/null || echo '')" = "false" ]; then
+      echo "" >&2
+      echo "✖ push blocked: you can READ $slug but have no push right on it." >&2
+      echo "  (ls-remote succeeds on any public repo — readable never implied writable.)" >&2
+      echo "" >&2
+      exit 1
+    fi
+  fi
+  exit 0
+fi
+
+# Offline? Then this is not an auth problem — don't block.
+case "$(git remote get-url origin)" in
+  *github.com*) host=github.com ;;
+  *) exit 0 ;;                                        # non-GitHub remote: can't advise, don't block
 esac
-command -v gh >/dev/null 2>&1 || exit 0     # gh not installed — skip
+command -v curl >/dev/null 2>&1 && ! curl -sS -o /dev/null --max-time 8 "https://$host" 2>/dev/null && exit 0
 
-# owner/name for both the HTTPS and SSH remote forms, minus any trailing .git or slash.
-# Three simple substitutions, not one clever pattern: BSD sed has no non-greedy operator, and a
-# pattern it rejects makes this fail closed under `set -e` — blocking every push for a bad regex.
-slug=$(printf '%s\n' "$remote_url" | sed -E -e 's#^.*github\.com[:/]+##' -e 's#\.git$##' -e 's#/$##')
-[ -n "$slug" ] || exit 0
-
-# Does the active account have push rights here? true / false / empty (call failed).
-perm=$(gh api "/repos/$slug" --jq '.permissions.push' 2>/dev/null || echo "")
-[ "$perm" = "true" ] && exit 0              # authorised — the common case, one API call
-
-# Ambiguous? Only treat it as an account problem if gh can otherwise reach the API.
-active=$(gh api user -q .login 2>/dev/null || echo "")
-[ -n "$active" ] || exit 0                  # offline / not authenticated — fail open, don't block
-
+slug=$(git remote get-url origin | sed -E -e 's#^.*github\.com[:/]+##' -e 's#\.git$##' -e 's#/$##')
 echo "" >&2
-echo "✖ push blocked: '$active' cannot push to $slug." >&2
-echo "  This is the account-flip gotcha — the push would fail as 'Repository not found'." >&2
-echo "  Accounts on this machine:" >&2
-gh auth status 2>&1 | sed -n 's/.*Logged in to [^ ]* account \([^ ]*\).*/    gh auth switch --hostname github.com --user \1/p' >&2
-echo "  Then:  gh auth setup-git" >&2
+echo "✖ push blocked: cannot authenticate to $slug — the push would fail as 'Repository not found'." >&2
+if command -v gh >/dev/null 2>&1; then
+  active=$(gh api user -q .login 2>/dev/null || echo "?")
+  echo "  gh's active account is '$active', but git authenticates through its OWN credential helper," >&2
+  echo "  which can still hold a stale token for a different account. Re-sync them:" >&2
+  echo "" >&2
+  gh auth status 2>&1 | sed -n "s/.*Logged in to [^ ]* account \([^ ]*\).*/    gh auth switch --hostname $host --user \1/p" >&2
+  echo "    gh auth setup-git        # <- the step that actually fixes a stale credential" >&2
+else
+  echo "  Check the credential your git helper holds for $host." >&2
+fi
 echo "" >&2
 exit 1
