@@ -1,0 +1,51 @@
+#!/bin/sh
+# Pre-commit gate — installed by claude-init, committed with the repo so it works for every clone
+# (including collaborators who have no personal Claude setup). Two checks, in cost order:
+#
+#   1. STAGED-SECRET SCAN — refuses a commit that ADDS a credential-format string. Scans only the
+#      lines this commit adds, so pre-existing content can't block you and the scan stays fast.
+#   2. THE REPO'S OWN GATE — discovered from the repo, never hardcoded here: an `npm run gate`
+#      script if package.json declares one, else a `gate` target in a Makefile. No gate declared
+#      ⇒ this step is skipped (the secret scan still runs).
+#
+# Emergency bypass: `git commit -n`. If you bypass the secret scan, you own what lands.
+set -e
+
+# ---- 1. staged-secret scan ------------------------------------------------------------------
+# Unambiguous credential formats only. Entropy heuristics are deliberately NOT fatal here: they
+# fire on git SHAs and content hashes, and a gate that cries wolf gets bypassed on reflex.
+SECRET_RE='sk-ant-[A-Za-z0-9_-]{20}|sk-[A-Za-z0-9]{20,}|gh[opsru]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|xox[baprs]-[A-Za-z0-9-]{10,}|AIza[0-9A-Za-z_-]{35}|-----BEGIN [A-Z ]*PRIVATE KEY-----'
+
+# Added lines only ('+' prefix, minus the +++ file headers). NOTE the bracket expressions: a
+# backslash-escaped '+' after '^' is INVALID in some ERE engines (ugrep rejects it outright and the
+# whole scan silently matches nothing) — '[+]' is unambiguous everywhere.
+added=$(git diff --cached -U0 --diff-filter=ACM | grep -E '^[+]' | grep -v '^[+][+][+]' || true)
+if [ -n "$added" ]; then
+  hits=$(printf '%s\n' "$added" | grep -Ec "$SECRET_RE" || true)
+  if [ "${hits:-0}" -gt 0 ]; then
+    echo "" >&2
+    echo "✖ commit blocked: $hits staged line(s) contain a credential-format string." >&2
+    echo "  Values are NOT printed. Find them with:" >&2
+    echo "    git diff --cached -U0 | grep -nE '$SECRET_RE'" >&2
+    echo "  Move the value into a vault (macOS: security add-generic-password) and read it at" >&2
+    echo "  use-time; commit only the NAME. Override (you own it):  git commit -n" >&2
+    echo "" >&2
+    exit 1
+  fi
+fi
+
+# ---- 2. the repo's own gate ----------------------------------------------------------------
+# Node 22 via nvm where a repo needs it (native deps are ABI-pinned); harmless otherwise.
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+# shellcheck disable=SC1091
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use && nvm use --silent 2>/dev/null || true
+
+if [ -f package.json ] && grep -qE '"gate"[[:space:]]*:' package.json; then
+  echo "running the repo gate (npm run gate)…"
+  npm run gate
+elif [ -f Makefile ] && grep -qE '^gate:' Makefile; then
+  echo "running the repo gate (make gate)…"
+  make gate
+else
+  echo "no repo gate declared (no npm 'gate' script, no Makefile 'gate' target) — secret scan only."
+fi

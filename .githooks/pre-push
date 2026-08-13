@@ -1,0 +1,30 @@
+#!/bin/sh
+# Pre-push guard — the multi-account gotcha. The gh CLI silently flips between logins, and pushing
+# as the wrong account 404s with "Repository not found", which reads like a missing/renamed repo and
+# sends you hunting the wrong problem. This compares the active login against the origin owner BEFORE
+# the push and prints the exact fix. (It has fired for real: two repos in one session.)
+#
+# Skips cleanly when gh is absent or the remote isn't GitHub, so it is safe in any clone.
+# Installed by claude-init and committed with the repo. Emergency bypass: `git push --no-verify`.
+set -e
+
+remote_url=$(git remote get-url origin 2>/dev/null || echo "")
+case "$remote_url" in
+  *github.com*) ;;
+  *) exit 0 ;;                              # not a GitHub remote — nothing to guard
+esac
+command -v gh >/dev/null 2>&1 || exit 0     # gh not installed — skip
+
+# Owner = the path segment before the repo name, for both the HTTPS and SSH remote forms.
+owner=$(printf '%s\n' "$remote_url" | sed -E 's#^.*github\.com[:/]+([^/]+)/.*$#\1#')
+active=$(gh api user -q .login 2>/dev/null || echo "")
+
+if [ -n "$owner" ] && [ -n "$active" ] && [ "$owner" != "$active" ]; then
+  echo "" >&2
+  echo "✖ push blocked: gh is authenticated as '$active' but origin owner is '$owner'." >&2
+  echo "  This is the account-flip gotcha — pushing now would 404 'Repository not found'." >&2
+  echo "  Fix:  gh auth switch --hostname github.com --user $owner && gh auth setup-git" >&2
+  echo "" >&2
+  exit 1
+fi
+exit 0
