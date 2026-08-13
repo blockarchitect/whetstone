@@ -1,4 +1,5 @@
 #!/bin/sh
+# claude-hook-version: 2   (managed by ~/.claude/bin/claude-init — edit there, not here)
 # Pre-commit gate — installed by claude-init, committed with the repo so it works for every clone
 # (including collaborators who have no personal Claude setup). Two checks, in cost order:
 #

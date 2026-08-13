@@ -1,4 +1,5 @@
 #!/bin/sh
+# claude-hook-version: 2   (managed by ~/.claude/bin/claude-init — edit there, not here)
 # Pre-push guard — the multi-account gotcha. The gh CLI silently flips between logins, and pushing as
 # the wrong account fails with "Repository not found", which reads like a missing or renamed repo and
 # sends you hunting the wrong problem. (It has fired for real three times in one week.)
