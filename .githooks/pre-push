@@ -1,10 +1,14 @@
 #!/bin/sh
-# Pre-push guard — the multi-account gotcha. The gh CLI silently flips between logins, and pushing
-# as the wrong account 404s with "Repository not found", which reads like a missing/renamed repo and
-# sends you hunting the wrong problem. This compares the active login against the origin owner BEFORE
-# the push and prints the exact fix. (It has fired for real: two repos in one session.)
+# Pre-push guard — the multi-account gotcha. The gh CLI silently flips between logins, and pushing as
+# the wrong account fails with "Repository not found", which reads like a missing or renamed repo and
+# sends you hunting the wrong problem. (It has fired for real three times in one week.)
 #
-# Skips cleanly when gh is absent or the remote isn't GitHub, so it is safe in any clone.
+# It asks the question that actually matters — "can the ACTIVE account push to this repo?" — rather
+# than comparing the origin owner to the login name. Those differ legitimately: an ORG-owned repo has
+# the org as its owner, so a name comparison blocks every org push. Permission is the truth.
+#
+# Fails OPEN on anything ambiguous (offline, no gh, rate-limited, non-GitHub remote): a guard that
+# blocks work when the network hiccups gets disabled, and then it guards nothing.
 # Installed by claude-init and committed with the repo. Emergency bypass: `git push --no-verify`.
 set -e
 
@@ -15,16 +19,25 @@ case "$remote_url" in
 esac
 command -v gh >/dev/null 2>&1 || exit 0     # gh not installed — skip
 
-# Owner = the path segment before the repo name, for both the HTTPS and SSH remote forms.
-owner=$(printf '%s\n' "$remote_url" | sed -E 's#^.*github\.com[:/]+([^/]+)/.*$#\1#')
-active=$(gh api user -q .login 2>/dev/null || echo "")
+# owner/name for both the HTTPS and SSH remote forms, minus any trailing .git or slash.
+# Three simple substitutions, not one clever pattern: BSD sed has no non-greedy operator, and a
+# pattern it rejects makes this fail closed under `set -e` — blocking every push for a bad regex.
+slug=$(printf '%s\n' "$remote_url" | sed -E -e 's#^.*github\.com[:/]+##' -e 's#\.git$##' -e 's#/$##')
+[ -n "$slug" ] || exit 0
 
-if [ -n "$owner" ] && [ -n "$active" ] && [ "$owner" != "$active" ]; then
-  echo "" >&2
-  echo "✖ push blocked: gh is authenticated as '$active' but origin owner is '$owner'." >&2
-  echo "  This is the account-flip gotcha — pushing now would 404 'Repository not found'." >&2
-  echo "  Fix:  gh auth switch --hostname github.com --user $owner && gh auth setup-git" >&2
-  echo "" >&2
-  exit 1
-fi
-exit 0
+# Does the active account have push rights here? true / false / empty (call failed).
+perm=$(gh api "/repos/$slug" --jq '.permissions.push' 2>/dev/null || echo "")
+[ "$perm" = "true" ] && exit 0              # authorised — the common case, one API call
+
+# Ambiguous? Only treat it as an account problem if gh can otherwise reach the API.
+active=$(gh api user -q .login 2>/dev/null || echo "")
+[ -n "$active" ] || exit 0                  # offline / not authenticated — fail open, don't block
+
+echo "" >&2
+echo "✖ push blocked: '$active' cannot push to $slug." >&2
+echo "  This is the account-flip gotcha — the push would fail as 'Repository not found'." >&2
+echo "  Accounts on this machine:" >&2
+gh auth status 2>&1 | sed -n 's/.*Logged in to [^ ]* account \([^ ]*\).*/    gh auth switch --hostname github.com --user \1/p' >&2
+echo "  Then:  gh auth setup-git" >&2
+echo "" >&2
+exit 1
