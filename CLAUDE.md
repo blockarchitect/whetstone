@@ -5,6 +5,15 @@
 > reasoning/history behind it, read `memory/decisions.md`. For what's still open,
 > read `memory/open-questions.md`.
 
+## The account method
+Global law lives in `~/.claude/CLAUDE.md` (auto-loaded; its CORE block is non-negotiable).
+The portable method lives in `~/.claude/playbooks/` (PLAN · DOCUMENTATION · MULTI_AGENT) —
+read the relevant one before planning, restructuring docs, or running agent waves. Project
+rules here override method defaults; nothing overrides the global law. Agent memory for this
+project travels with this repo at `.claude/memory/` (committed, not gitignored), symlinked
+from `~/.claude/projects/-Users-ag-GitHub-blockarchitect-whetstone/memory` — on a fresh
+machine: `ln -s "$(pwd)/.claude/memory" ~/.claude/projects/-Users-ag-GitHub-blockarchitect-whetstone/memory`.
+
 ## What this project is
 An **AI-native practice-test platform for the pre-employment aptitude & psychometric
 testing vertical.** Free tools first to build an audience; monetize a validated market
