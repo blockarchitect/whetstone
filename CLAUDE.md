@@ -8,8 +8,8 @@
 ## The account method
 Global law lives in `~/.claude/CLAUDE.md` (auto-loaded; its CORE block is non-negotiable).
 The portable method lives in `~/.claude/playbooks/` (PLAN · DOCUMENTATION · MULTI_AGENT ·
-CODE_STRUCTURE) — read the relevant one before planning, restructuring docs, running agent
-waves, or shaping a codebase's file layout. Project
+CODE_STRUCTURE · CODE_STYLE) — read the relevant one before planning, restructuring docs,
+running agent waves, shaping a codebase's file layout, or writing comments and checks. Project
 rules here override method defaults; nothing overrides the global law. Agent memory for this
 project travels with this repo at `.claude/memory/` (committed, not gitignored), symlinked
 from `~/.claude/projects/-Users-ag-GitHub-blockarchitect-whetstone/memory` — on a fresh
